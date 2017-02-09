@@ -1,0 +1,8 @@
+
+abstract class Ticket {
+	private int number;
+	private int price;
+	abstract Ticket();
+	abstract int getPrice();
+	abstract String toString();
+}

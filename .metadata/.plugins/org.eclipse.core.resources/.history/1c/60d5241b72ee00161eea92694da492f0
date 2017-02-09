@@ -1,0 +1,14 @@
+
+abstract class Ticket {
+	abstract void Ticket(int number);
+	abstract int getPrice();
+	abstract String toString();
+}
+
+public class WalkupTicket extends Ticket {
+	private int number;
+	private int price;
+	public void Ticket(int number){
+		this.number = number;
+	}
+}

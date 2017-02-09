@@ -1,0 +1,8 @@
+// Brandon Nguyen, 2/8/17 2nd Period
+abstract class Ticket {
+	private int number;
+	private int price;
+	public abstract void Ticket(int number);
+	public abstract double getPrice();
+	public abstract String toString();
+}

@@ -1,4 +1,4 @@
-
+// Brandon Nguyen, 2/8/17 2nd Period
 public class WalkupTicket extends Ticket {
 	public WalkupTicket (int number){
 		//creates a new ticket using extended ticket code

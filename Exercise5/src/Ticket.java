@@ -1,4 +1,4 @@
-
+// Brandon Nguyen, 2/8/17 2nd Period
 abstract class Ticket {
 	private int number;
 	public Ticket(int number){

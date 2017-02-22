@@ -1,0 +1,8 @@
+output.print(1.9);
+output.print(5.0);
+output.print(6.0);
+output.println(8.3);
+output.priint(10.9);
+outpur.println(13.2);
+output.print(17.6);
+output.println(20.1);

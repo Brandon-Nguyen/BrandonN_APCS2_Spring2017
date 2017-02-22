@@ -1,0 +1,20 @@
+//Brandon Nguyen, 2nd Period, 
+import java.io.*;
+import java.util.*;
+
+
+public class changeInTemp {
+	public static void main (String[] args) throws FileNotFoundException{
+		Scanner input = new Scanner (new File ("./data/weather.txt"));
+		double currentTemp = input.nextDouble();
+		double nextTemp = input.nextDouble();
+		for(int i = 0; i < 7; i++){
+			System.out.println(currentTemp + " to " + nextTemp + 
+					", change  = " + (double)(nextTemp - currentTemp));
+			if(i != 6){
+				currentTemp = nextTemp;
+				nextTemp = input.nextDouble();
+			}
+		}
+	}
+}

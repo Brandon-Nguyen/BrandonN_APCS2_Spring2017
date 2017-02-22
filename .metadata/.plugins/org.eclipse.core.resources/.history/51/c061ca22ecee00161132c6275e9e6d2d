@@ -1,9 +1,0 @@
-// Brandon Nguyen, 2/8/17 2nd Period
-public class Tester {
-	public static void main(String[] args) {
-		Ticket a = new WalkupTicket(10);
-		System.out.println(a.getPrice());
-		System.out.println(a.toString());
-	}
-
-}

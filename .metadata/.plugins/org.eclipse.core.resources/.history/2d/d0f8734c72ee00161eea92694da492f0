@@ -1,8 +1,0 @@
-
-public class WalkupTicket extends Ticket {
-	private int number;
-	private int price;
-	public void Ticket(number){
-		this.number = number;
-	}
-}

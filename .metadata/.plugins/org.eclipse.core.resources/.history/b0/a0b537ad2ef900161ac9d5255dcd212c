@@ -7,13 +7,14 @@ public class changeInTemp {
 	public static void main (String[] args) throws FileNotFoundException{
 		Scanner input = new Scanner (new File ("./data/weather.txt"));
 		double currentTemp = input.nextDouble();
+		double nextTemp = input.nextDouble();
 		for(int i = 0; i < 7; i++){
-			double nextTemp = input.nextDouble();
-			int difference = (int)((nextTemp - currentTemp) * 10);
-			double diffInTemp = (double) difference / 10.0;
 			System.out.println(currentTemp + " to " + nextTemp + 
-					", change  = " + (diffInTemp));
-			currentTemp = nextTemp;
+					", change  = " + (nextTemp - currentTemp));
+			if(i != 6){
+				currentTemp = nextTemp;
+				nextTemp = input.nextDouble();
+			}
 		}
 		input.close();
 	}

@@ -9,7 +9,7 @@ public class changeInTemp {
 		double currentTemp = input.nextDouble();
 		for(int i = 0; i < 7; i++){
 			double nextTemp = input.nextDouble();
-			int difference = (int)((nextTemp - currentTemp) * 10);
+			int difference = (int)(nextTemp - currentTemp);
 			double diffInTemp = (double) difference / 10.0;
 			System.out.println(currentTemp + " to " + nextTemp + 
 					", change  = " + (diffInTemp));

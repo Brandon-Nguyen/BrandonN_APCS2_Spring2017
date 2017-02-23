@@ -1,7 +1,7 @@
-//Brandon Nguyen, 2nd Period, 2/23/17
-
+//Brandon Nguyen, 2nd Period, 
 import java.io.*;
 import java.util.*;
+
 
 public class changeInTemp {
 	public static void main (String[] args) throws FileNotFoundException{

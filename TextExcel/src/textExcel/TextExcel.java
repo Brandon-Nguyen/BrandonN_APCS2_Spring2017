@@ -14,12 +14,14 @@ public class TextExcel
 		
 		Spreadsheet excel = new Spreadsheet();
 		
+		TestsALL.Helper th = new TestsALL.Helper();
+        System.out.println(th.getText());
+		
 		Scanner input = new Scanner(System.in);
-		while(input.equals("quit") != true){
+		/*while(input.equals("quit") != true){
 			System.out.println("What do you want to do?");
 			String command = input.nextLine();
-			System.out.println(Spreadsheet.processCommand(command));
+			System.out.println(Spreadsheet.processCommand(command));*/
 		}
 		
-	}
 }

@@ -49,5 +49,12 @@ public class Spreadsheet implements Grid
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Cell getCell(Cell location){
+		if(location instanceof EmptyCell){
+			return EmptyCell;
+		}
+		
+	}
 
 }

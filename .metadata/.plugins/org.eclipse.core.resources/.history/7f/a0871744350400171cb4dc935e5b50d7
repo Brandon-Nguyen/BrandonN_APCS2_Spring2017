@@ -20,14 +20,12 @@ public class Spreadsheet implements Grid
 	{
 		// TODO Auto-generated method stub
 		if(command.length() <= 3){
-			SpreadsheetLocation loc = new SpreadsheetLocation(command);
-			return (getCell(loc).fullCellText());
+			return (getCell(command).fullCellText());
 			
 		}else if(command.contains("clear")){
 			if(command.length() > 7){
 				String[] split = command.split(" ");
-				SpreadsheetLocation loc = new SpreadsheetLocation(command);
-				clear(loc);
+				clear(split[1]);
 				return getGridText();
 			}else{
 				for(int i = 0; i < array.length; i++ ){
@@ -39,8 +37,7 @@ public class Spreadsheet implements Grid
 			}
 		}else if(command.split(" ").length == 3){
 			String[] split = command.split(" ");
-			SpreadsheetLocation area = new SpreadsheetLocation(command);
-			Cell loc = getCell(area);
+			Cell loc = getCell(command);
 			loc = new TextCell(split[2]);
 			
 		}
@@ -66,7 +63,7 @@ public class Spreadsheet implements Grid
 	public Cell getCell(Location loc)
 	{
 		// TODO Auto-generated method stub
-		return array[loc.getRow()][loc.getCol()];
+		return null;
 	}
 
 	@Override
@@ -91,7 +88,11 @@ public class Spreadsheet implements Grid
 		return grid;
 	}
 	
-	public void clear(Location command){
+	public Cell getCell(String location){
+		SpreadsheetLocation area = new SpreadsheetLocation(location);
+		return array[area.getRow()][area.getCol()];
+	}
+	public void clear(String command){
 		Cell location = getCell(command);
 		location = new EmptyCell();
 	}

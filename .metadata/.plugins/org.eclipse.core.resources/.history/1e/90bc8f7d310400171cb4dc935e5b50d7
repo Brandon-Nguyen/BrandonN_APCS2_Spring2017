@@ -20,14 +20,12 @@ public class Spreadsheet implements Grid
 	{
 		// TODO Auto-generated method stub
 		if(command.length() <= 3){
-			SpreadsheetLocation loc = new SpreadsheetLocation(command);
-			return (getCell(loc).fullCellText());
-			
+			int[] rowCol = rowAndCol(command);
+			return (array[rowCol[0]][rowCol[1]].fullCellText());
 		}else if(command.contains("clear")){
 			if(command.length() > 7){
 				String[] split = command.split(" ");
-				SpreadsheetLocation loc = new SpreadsheetLocation(command);
-				clear(loc);
+				clear(split[1]);
 				return getGridText();
 			}else{
 				for(int i = 0; i < array.length; i++ ){
@@ -39,9 +37,8 @@ public class Spreadsheet implements Grid
 			}
 		}else if(command.split(" ").length == 3){
 			String[] split = command.split(" ");
-			SpreadsheetLocation area = new SpreadsheetLocation(command);
-			Cell loc = getCell(area);
-			loc = new TextCell(split[2]);
+			int[] loc = rowAndCol(command);
+			array[loc[0]][loc[1]] = new TextCell(split[2]);
 			
 		}
 		
@@ -66,34 +63,39 @@ public class Spreadsheet implements Grid
 	public Cell getCell(Location loc)
 	{
 		// TODO Auto-generated method stub
-		return array[loc.getRow()][loc.getCol()];
+		return null;
 	}
 
 	@Override
 	public String getGridText()
 	{
 		// TODO Auto-generated method stub
-		String grid = "   ";
-		for(int i = 0; i < 12; i++){
-			grid = "|" + (char) (i + 'A') + "         |";
-		}
-		for(int i = 0; i < 20; i++){
-			grid += "/n";
-			if(i < 10){
-				grid = i + "  ";
-			}else{
-				grid = i + " ";
-			}
-			for(int j = 0; j < 12; j++){
-				grid = array[i][j].abbreviatedCellText();
-			}
-		}
+		String grid;
+		
+		
 		return grid;
 	}
 	
-	public void clear(Location command){
-		Cell location = getCell(command);
-		location = new EmptyCell();
+	public Cell getCell(Cell location){
+		if(location instanceof EmptyCell){
+			return location.abbreviatedCellText();
+		}else if(location instanceof TextCell){
+			return 
+		}
+		
+	}
+	
+	public int[] rowAndCol(String input){
+		int[] returnVal= new int[2];
+		SpreadsheetLocation loc = new SpreadsheetLocation(input);
+		returnVal[0] = loc.getRow();
+		returnVal[1] = loc.getCol();
+		return returnVal;
+	}
+	
+	public void clear(String command){
+		int[] loc = rowAndCol(command);
+		array[loc[0]][loc[1]] = new EmptyCell();
 	}
 
 }

@@ -13,10 +13,8 @@ public class TextExcel
 	    // Add your command loop here
 		
 		Spreadsheet excel = new Spreadsheet();
-		
-		TestsALL.Helper th = new TestsALL.Helper();
-        System.out.println(th.getText());
-        ;
+
+        System.out.println(excel.getGridText());
 		
 		Scanner input = new Scanner(System.in);
 		while(input.equals("quit") != true){

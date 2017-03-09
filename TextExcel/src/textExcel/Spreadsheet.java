@@ -4,10 +4,9 @@ package textExcel;
 
 public class Spreadsheet implements Grid
 {
-	private Cell[][] array;
+	private Cell[][] array = new Cell [getRows()][getCols()];
 	
 	public Spreadsheet(){
-		array = new Cell [20][12];
 		for(int i = 0; i < array.length; i++){
 			for( int j = 0; j < array[i].length; j++){
 				array[i][j] = new EmptyCell();
@@ -19,29 +18,25 @@ public class Spreadsheet implements Grid
 	public String processCommand(String command)
 	{
 		// TODO Auto-generated method stub
+		String[] split = command.split(" ");
+		split[0] = split[0].toUpperCase();
 		if(command.length() <= 3){
-			SpreadsheetLocation loc = new SpreadsheetLocation(command);
+			SpreadsheetLocation loc = new SpreadsheetLocation(split[0]);
 			return (getCell(loc).fullCellText());
 			
 		}else if(command.contains("clear")){
 			if(command.length() > 7){
-				String[] split = command.split(" ");
-				SpreadsheetLocation loc = new SpreadsheetLocation(command);
+				SpreadsheetLocation loc = new SpreadsheetLocation(split[2]);
 				clear(loc);
 				return getGridText();
+				
 			}else{
-				for(int i = 0; i < array.length; i++ ){
-					for(char j = 'a'; j < array[i].length; j++){
-						array[j][i] = new EmptyCell();
-					}
-				}
+				Spreadsheet array = new Spreadsheet();
 				return getGridText();
 			}
 		}else if(command.split(" ").length == 3){
-			String[] split = command.split(" ");
-			SpreadsheetLocation area = new SpreadsheetLocation(command);
-			Cell loc = getCell(area);
-			loc = new TextCell(split[2]);
+			SpreadsheetLocation area = new SpreadsheetLocation(split[0]);
+			array[area.getRow()][area.getCol()] = new TextCell(split[2]);
 			
 		}
 		
@@ -52,14 +47,14 @@ public class Spreadsheet implements Grid
 	public int getRows()
 	{
 		// TODO Auto-generated method stub
-		return array.length;
+		return 20;
 	}
 
 	@Override
 	public int getCols()
 	{
 		// TODO Auto-generated method stub
-		return array[1].length;
+		return 12;
 	}
 
 	@Override
@@ -73,27 +68,29 @@ public class Spreadsheet implements Grid
 	public String getGridText()
 	{
 		// TODO Auto-generated method stub
-		String grid = "   ";
-		for(int i = 0; i < 12; i++){
-			grid = "|" + (char) (i + 'A') + "         |";
+		String grid = "   |";
+		for(int i = 0; i < getCols(); i++){
+			grid += (char) (i + 'A') + "         |";
 		}
-		for(int i = 0; i < 20; i++){
-			grid += "/n";
+		for(int i = 0; i < getRows(); i++){
+			grid += "\n";
 			if(i < 10){
-				grid = i + "  ";
+				grid += i + "  ";
 			}else{
-				grid = i + " ";
+				grid += i + " ";
 			}
 			for(int j = 0; j < 12; j++){
-				grid = array[i][j].abbreviatedCellText();
+				grid += array[i][j].abbreviatedCellText();
+				if(j == 11){
+					grid += "|";
+				}
 			}
 		}
 		return grid;
 	}
 	
 	public void clear(Location command){
-		Cell location = getCell(command);
-		location = new EmptyCell();
+		array[command.getRow()][command.getCol()] = new EmptyCell();
 	}
 
 }

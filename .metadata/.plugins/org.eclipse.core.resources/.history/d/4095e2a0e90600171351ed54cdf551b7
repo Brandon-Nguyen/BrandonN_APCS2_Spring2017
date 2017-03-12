@@ -1,0 +1,42 @@
+package textExcel;
+
+public class TextCell implements Cell {
+	
+	private String value;
+
+	public TextCell(String value) {
+		// TODO Auto-generated constructor stub
+		this.value = value;
+	}
+	public String padToTen(){
+		String returnVal = "";
+		if(value.contains("\"") == true){
+			returnVal = value.substring(1, value.length() - 1);
+		}
+		//System.out.println(value);
+		
+		if(value.length() > 10){
+			returnVal = value.substring(0, 10);
+			//System.out.println(value);
+		}else{
+			for(int i = 0; i <= 10 - value.length() - 1; i++){
+				returnVal += " ";
+				//System.out.println(value);
+			}
+			return returnVal;
+		}
+	}
+	
+	@Override
+	public String abbreviatedCellText() {
+		// TODO Auto-generated method stub
+		return padToTen();
+	}
+
+	@Override
+	public String fullCellText() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+
+}

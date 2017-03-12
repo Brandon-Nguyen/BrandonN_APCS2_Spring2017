@@ -1,5 +1,7 @@
 package textExcel;
 
+import java.util.Arrays;
+
 // Update this file with your own code.
 
 public class Spreadsheet implements Grid
@@ -26,19 +28,37 @@ public class Spreadsheet implements Grid
 			return (getCell(loc).fullCellText());
 			
 		}else if(command.contains("clear")){
-			if(command.length() > 7){
+			if(split.length == 2){
 				SpreadsheetLocation loc = new SpreadsheetLocation(split[1]);
-				clear(loc);
+				//System.out.println(split[1]);
+				//System.out.println(loc.getRow());
+				//System.out.println(loc.getCol());
+				array[loc.getRow()][loc.getCol()] = new EmptyCell();
+				//System.out.println();
 				return getGridText();
 				
 			}else{
-				Spreadsheet array = new Spreadsheet();
+				for(int i = 0; i < array.length; i++){
+					for( int j = 0; j < array[i].length; j++){
+						array[i][j] = new EmptyCell();
+					}
+				}
 				return getGridText();
 			}
-		}else if(command.split(" ").length == 3){
+		}else if(split.length >= 3){
 			SpreadsheetLocation area = new SpreadsheetLocation(split[0]);
-			array[area.getRow()][area.getCol()] = new TextCell(split[2]);
-			//System.out.println(getCell(area).fullCellText());
+			System.out.println(split[0]);
+			System.out.println(split[1]);
+			System.out.println(split[2]);
+			String combinedStr = split[2];
+			int i = 3;
+			while(i < split.length){
+				combinedStr += " " + split[i];
+				i++;
+			}
+			array[area.getRow()][area.getCol()] = new TextCell(combinedStr);
+			System.out.println(getCell(area).fullCellText());
+			getGridText();
 			
 		}
 		
@@ -63,8 +83,8 @@ public class Spreadsheet implements Grid
 	public Cell getCell(Location loc)
 	{
 		// TODO Auto-generated method stub
-		//System.out.println(loc.getRow());
-		//System.out.println(loc.getCol());
+		System.out.println(loc.getRow());
+		System.out.println(loc.getCol());
 		return array[loc.getRow()][loc.getCol()];
 	}
 
@@ -89,12 +109,6 @@ public class Spreadsheet implements Grid
 		}
 		grid += "\n";
 		return grid;
-	}
-	
-	public void clear(Location command){
-		System.out.println(command.getRow());
-		System.out.println(command.getCol());
-		array[command.getRow()][command.getCol()] = new EmptyCell();
 	}
 
 }

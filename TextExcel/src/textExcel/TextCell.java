@@ -8,21 +8,26 @@ public class TextCell implements Cell {
 		// TODO Auto-generated constructor stub
 		this.value = value;
 	}
-	public String padToTen(){
+	public void padToTen(){
+		if(value.contains("\"") == true){
+			value = value.substring(1, value.length() - 1);
+		}
+		System.out.println(x);
+		
 		if(value.length() > 10){
-			return value.substring(0, 10);
+			value = value.substring(0, 10);
 		}else{
-			for(int i = 0; i < 10 - value.length(); i++){
+			for(int i = 0; i <= 14 - value.length() - 1; i++){
 				value += " ";
 			}
-			return value;
 		}
 	}
 	
 	@Override
 	public String abbreviatedCellText() {
 		// TODO Auto-generated method stub
-		return "|" + padToTen() + "|";
+		padToTen();
+		return value;
 	}
 
 	@Override

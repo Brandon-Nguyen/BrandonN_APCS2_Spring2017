@@ -21,12 +21,13 @@ public class Spreadsheet implements Grid
 		String[] split = command.split(" ");
 		split[0] = split[0].toUpperCase();
 		if(command.length() <= 3){
+			
 			SpreadsheetLocation loc = new SpreadsheetLocation(split[0]);
 			return (getCell(loc).fullCellText());
 			
 		}else if(command.contains("clear")){
 			if(command.length() > 7){
-				SpreadsheetLocation loc = new SpreadsheetLocation(split[2]);
+				SpreadsheetLocation loc = new SpreadsheetLocation(split[1]);
 				clear(loc);
 				return getGridText();
 				
@@ -37,6 +38,7 @@ public class Spreadsheet implements Grid
 		}else if(command.split(" ").length == 3){
 			SpreadsheetLocation area = new SpreadsheetLocation(split[0]);
 			array[area.getRow()][area.getCol()] = new TextCell(split[2]);
+			//System.out.println(getCell(area).fullCellText());
 			
 		}
 		
@@ -61,6 +63,8 @@ public class Spreadsheet implements Grid
 	public Cell getCell(Location loc)
 	{
 		// TODO Auto-generated method stub
+		//System.out.println(loc.getRow());
+		//System.out.println(loc.getCol());
 		return array[loc.getRow()][loc.getCol()];
 	}
 
@@ -72,24 +76,24 @@ public class Spreadsheet implements Grid
 		for(int i = 0; i < getCols(); i++){
 			grid += (char) (i + 'A') + "         |";
 		}
-		for(int i = 0; i < getRows(); i++){
+		for(int i = 1; i <= getRows(); i++){
 			grid += "\n";
 			if(i < 10){
-				grid += i + "  ";
+				grid += i + "  |";
 			}else{
-				grid += i + " ";
+				grid += i + " |";
 			}
 			for(int j = 0; j < 12; j++){
-				grid += array[i][j].abbreviatedCellText();
-				if(j == 11){
-					grid += "|";
-				}
+				grid += array[i-1][j].abbreviatedCellText() + "|";
 			}
 		}
+		grid += "\n";
 		return grid;
 	}
 	
 	public void clear(Location command){
+		System.out.println(command.getRow());
+		System.out.println(command.getCol());
 		array[command.getRow()][command.getCol()] = new EmptyCell();
 	}
 

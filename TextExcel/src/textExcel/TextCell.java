@@ -8,7 +8,8 @@ public class TextCell implements Cell {
 	public TextCell(String value) {
 		this.value = value;
 	}
-	public String padToTen(){
+	
+	public String truncateAndPad(){
 		
 		//creates a new value so the original is not modified
 		String returnVal = "";
@@ -30,7 +31,7 @@ public class TextCell implements Cell {
 			return returnVal;
 		}else{
 			
-			//fills in the spaces to make the value left alligned
+			//fills in the spaces to make the value left aligned
 			while(returnVal.length() != 10){
 				returnVal += " ";
 
@@ -41,7 +42,7 @@ public class TextCell implements Cell {
 	
 	@Override
 	public String abbreviatedCellText() {
-		return padToTen();
+		return truncateAndPad();
 	}
 
 	@Override

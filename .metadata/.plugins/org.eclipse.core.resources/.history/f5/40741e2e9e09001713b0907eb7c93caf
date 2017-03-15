@@ -1,10 +1,8 @@
 package textExcel;
 
-public class FormulaCell extends RealCell{
-	
-	private String formula;
+public class PercentCell extends RealCell{
 
-	public FormulaCell(String formula) {
+	public PercentCell() {
 		// TODO Auto-generated constructor stub
 	}
 

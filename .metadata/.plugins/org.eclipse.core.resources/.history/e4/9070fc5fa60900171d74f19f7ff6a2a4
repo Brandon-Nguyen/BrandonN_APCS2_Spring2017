@@ -11,6 +11,6 @@ public class PercentCell extends ValueCell{
 
 	public double getDoubleValue(){
 		String returnVal = percent.substring(0, percent.length() - 2);
-		return Integer.parseInt(returnVal) / 100.0;
+		return Integer.parseInt(returnVal);
 	}
 }

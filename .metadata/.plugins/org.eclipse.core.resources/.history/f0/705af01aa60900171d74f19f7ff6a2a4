@@ -2,11 +2,8 @@ package textExcel;
 
 public class ValueCell extends RealCell{
 
-	private double value;
-	
-	public ValueCell(String num) {
+	public ValueCell() {
 		// TODO Auto-generated constructor stub
-		this.value = Integer.parseInt(num) + 0.0;
 		
 	}
 	

@@ -14,6 +14,7 @@ public class TextExcel
 	    // Add your command loop here
 		
 		Spreadsheet excel = new Spreadsheet();
+	
 		
 		Scanner input = new Scanner(System.in);
 		String command = "";

@@ -1,17 +1,19 @@
 package textExcel;
 
 public class ValueCell extends RealCell{
+	
+	private String value;
+	
+	public ValueCell(String num){
+		this.value = num;
+		setRealCell(num);
 
-	private double value;
-	
-	public ValueCell(String num) {
-		// TODO Auto-generated constructor stub
-		this.value = Integer.parseInt(num) + 0.0;
-		
 	}
-	
+
+
 	public double getDoubleValue(){
-		
+		String val = getRealCell();
+		return Double.parseDouble(val);
 	}
 
 }

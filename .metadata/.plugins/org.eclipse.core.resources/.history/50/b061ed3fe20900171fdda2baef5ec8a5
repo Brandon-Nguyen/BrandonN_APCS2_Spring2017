@@ -1,0 +1,14 @@
+package textExcel;
+
+public class PercentCell extends RealCell{
+	
+	public double getDoubleValue(){
+		String returnVal = getRealCell();
+		returnVal = returnVal.substring(0, returnVal.length() - 1);
+		System.out.println(returnVal);
+		System.out.println(Double.parseDouble(returnVal) / 100.0);
+		return Double.parseDouble(returnVal) / 100.0;
+	}
+	
+	
+}

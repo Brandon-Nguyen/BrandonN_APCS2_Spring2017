@@ -56,7 +56,7 @@ public class Spreadsheet implements Grid
 			
 		//checks the length, if more than three,
 		//then use to set values at a cell
-		}else if(split.length >= 3){
+		}else if(command.contains("\"")){
 			
 			//incase the input has multiple spaces so there are multiple splits
 			//for the input or value being set
@@ -76,7 +76,19 @@ public class Spreadsheet implements Grid
 			// returns the new grid with the new cell and value
 			return getGridText();
 			
+		}else if(command.contains("%")){
+			setPercentCell(split[0], split[2]);
+			return getGridText();
+			
+		}else if(command.contains("-") || command.contains("+") || command.contains("/") || command.contains("*")){
+			setFormulaCell(split[0], split[2]);
+			return getGridText();
+			
+		}else if(command.contains(".") || split[2].matches(".*\\d+.*")){
+			setValueCell(split[0], split[2]);
+			return getGridText();
 		}
+		
 		// if nothing above works, will return this string containing nothing
 		return "";
 	}
@@ -172,5 +184,20 @@ public class Spreadsheet implements Grid
 		
 		//sets the cell at the location to a textCell and assigns it a value
 		array[area.getRow()][area.getCol()] = new TextCell(value);
+	}
+	
+	public void setPercentCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new PercentCell(value);
+	}
+	
+	public void setFormulaCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new FormulaCell(value);
+	}
+	
+	public void setValueCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new ValueCell(value);
 	}
 }

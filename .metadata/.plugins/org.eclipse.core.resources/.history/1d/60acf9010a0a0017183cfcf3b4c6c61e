@@ -43,16 +43,20 @@ abstract class RealCell implements Cell {
 		if(returnVal.contains(".") == false && returnVal.contains("%") == false){
 			returnVal += ".0";
 		}
-
+		
+		if(returnVal.contains(".00")){
+			returnVal = returnVal.substring(0, returnVal.indexOf(".") + 2);
+		}
+		
 		if(returnVal.length() >= 10){
 			returnVal = cellContent.substring(0, 10);
-
+			//System.out.println(returnVal);
 		}else{
 			while(returnVal.length() != 10){
 				returnVal += " ";
-
+				//System.out.println(returnVal);
 			}
-
+			//System.out.println(returnVal);
 		}
 
 		return returnVal;

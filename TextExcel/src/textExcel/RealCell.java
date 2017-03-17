@@ -29,6 +29,8 @@ abstract class RealCell implements Cell {
 			holder = Double.parseDouble(returnVal);
 		}
 		returnVal = Double.toString(holder);
+		
+		checkZeroes(returnVal);
 		return returnVal;
 	}
 	
@@ -44,6 +46,7 @@ abstract class RealCell implements Cell {
 			returnVal += ".0";
 		}
 
+		checkZeroes(returnVal);
 		if(returnVal.length() >= 10){
 			returnVal = cellContent.substring(0, 10);
 
@@ -54,10 +57,39 @@ abstract class RealCell implements Cell {
 			}
 
 		}
-
+		
 		return returnVal;
 	}
 	
 	abstract double getDoubleValue();
 
+	public String checkZeroes(String value){
+		System.out.println(value);
+		if(value.substring(value.length() - 2).equals(".0") == true){
+			System.out.println(value.substring(0,value.length() - 2));
+			return value.substring(0,value.length() - 2);
+		}
+		int continuousZero = 0;
+		int countZero = 0;
+		int count = value.length() - 1;
+		while(count != 0){
+			if(countZero >= 2){
+				continuousZero = countZero;
+				System.out.println("Number of zeroes at" + continuousZero);
+			}
+			if(value.charAt(count) == '0'){
+				countZero++;
+				System.out.println("Count Zero at" + countZero);
+			}else{
+				countZero = 0;
+				System.out.println("Count Zero at" + countZero);
+			}
+			System.out.println("Count at" + count);
+			count--;
+			System.out.println("Count at" + count);
+		}
+		System.out.println("return value " + value.substring(0, value.length() - continuousZero - 1));
+		return value.substring(0, value.length() - continuousZero);
+	}
+	
 }

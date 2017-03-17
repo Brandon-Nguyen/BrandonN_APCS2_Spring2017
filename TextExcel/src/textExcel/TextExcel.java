@@ -18,6 +18,14 @@ public class TextExcel
 		
 		Scanner input = new Scanner(System.in);
 		String command = "";
+		RealCell cell = new ValueCell("3.00");
+		System.out.println(cell.abbreviatedCellText());
+		System.out.println(cell.fullCellText());
+		
+		RealCell cell2 = new ValueCell("123456");
+		System.out.println(cell2.abbreviatedCellText());
+		System.out.println(cell2.fullCellText());
+		
 		while(command.equals("quit") != true){
 			System.out.println("What do you want to do?");
 			command = input.nextLine();

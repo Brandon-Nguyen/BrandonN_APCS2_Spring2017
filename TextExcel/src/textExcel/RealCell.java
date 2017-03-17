@@ -31,6 +31,7 @@ abstract class RealCell implements Cell {
 		returnVal = Double.toString(holder);
 		
 		checkZeroes(returnVal);
+		
 		return returnVal;
 	}
 	
@@ -40,7 +41,6 @@ abstract class RealCell implements Cell {
 			returnVal = returnVal.substring(0, returnVal.indexOf("."));
 			returnVal += "%";
 		}
-		System.out.println(returnVal);
 
 		if(returnVal.contains(".") == false && returnVal.contains("%") == false){
 			returnVal += ".0";
@@ -77,7 +77,7 @@ abstract class RealCell implements Cell {
 				continuousZero = countZero;
 				System.out.println("Number of zeroes at" + continuousZero);
 			}
-			if(value.charAt(count) == '0'){
+			if(value.charAt(count) == '0' && value.charAt(count - 1) != '.'){
 				countZero++;
 				System.out.println("Count Zero at" + countZero);
 			}else{

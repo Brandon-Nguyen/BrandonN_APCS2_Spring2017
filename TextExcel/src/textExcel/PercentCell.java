@@ -12,9 +12,7 @@ public class PercentCell extends RealCell{
 	public double getDoubleValue(){
 		String returnVal = getRealCell();
 		returnVal = returnVal.substring(0, returnVal.length() - 1);
-		double holder = Double.parseDouble(returnVal) / 100.0;
-		returnVal = Double.toString(holder).substring(0, 10);
-		return Double.parseDouble(returnVal);
+		return Double.parseDouble(returnVal) / 100.0;
 	}
 	
 	

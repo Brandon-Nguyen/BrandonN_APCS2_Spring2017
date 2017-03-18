@@ -14,7 +14,7 @@ abstract class RealCell implements Cell {
 	
 	public String abbreviatedCellText() {
 		// TODO Auto-generated method stub
-		return padAndTruncate();
+		return checkZeroes(padAndTruncate());
 	}
 
 	public String fullCellText() {
@@ -30,29 +30,46 @@ abstract class RealCell implements Cell {
 		}
 		returnVal = Double.toString(holder);
 		
-		checkZeroes(returnVal);
-		
-		return returnVal;
+		if(returnVal.substring(returnVal.length() - 2, returnVal.length()).equals(".0")){
+			System.out.println(returnVal.substring(0, returnVal.length() - 2) + "ur right :D");
+			if(returnVal.substring(0,returnVal.indexOf(".0")).length() <= 1 || returnVal.contains("-")){
+				System.out.println(returnVal + " I am first");
+				//returnVal += ".0";
+				return returnVal;
+			}else{
+				System.out.println(returnVal.substring(0, returnVal.length() - 2) + " I am 2nd");
+				return returnVal.substring(0,returnVal.length() - 2);
+			}
+		}else{
+			System.out.println(checkZeroes(returnVal));
+			return checkZeroes(returnVal);
+		}
+
 	}
+	
 	
 	public String padAndTruncate(){
 		String returnVal = cellContent;
+		
+		if(!returnVal.contains(".") && !returnVal.contains("%") ){
+			returnVal += ".0";
+		}
+
+		returnVal = checkZeroes(returnVal);
+		if(returnVal.indexOf(".00") + 3 == returnVal.length()){
+			returnVal = returnVal.substring(0, returnVal.length() - 1);
+		}
 		if(returnVal.contains("%")){
 			returnVal = returnVal.substring(0, returnVal.indexOf("."));
 			returnVal += "%";
 		}
-
-		if(returnVal.contains(".") == false && returnVal.contains("%") == false){
-			returnVal += ".0";
-		}
-
-		checkZeroes(returnVal);
 		if(returnVal.length() >= 10){
 			returnVal = cellContent.substring(0, 10);
 
 		}else{
 			while(returnVal.length() != 10){
 				returnVal += " ";
+				System.out.println(returnVal.length());
 
 			}
 
@@ -65,13 +82,10 @@ abstract class RealCell implements Cell {
 
 	public String checkZeroes(String value){
 		System.out.println(value);
-		if(value.substring(value.length() - 2).equals(".0") == true){
-			System.out.println(value.substring(0,value.length() - 2));
-			return value.substring(0,value.length() - 2);
-		}
 		int continuousZero = 0;
 		int countZero = 0;
 		int count = value.length() - 1;
+		System.out.println("Count at" + count);
 		while(count != 0){
 			if(countZero >= 2){
 				continuousZero = countZero;
@@ -84,12 +98,11 @@ abstract class RealCell implements Cell {
 				countZero = 0;
 				System.out.println("Count Zero at" + countZero);
 			}
-			System.out.println("Count at" + count);
 			count--;
 			System.out.println("Count at" + count);
 		}
-		System.out.println("return value " + value.substring(0, value.length() - continuousZero - 1));
-		return value.substring(0, value.length() - continuousZero);
+		System.out.println("return value " + value.substring(0, value.length() - (continuousZero + 1)));
+		return value.substring(0, value.length() - (continuousZero));
 	}
 	
 }

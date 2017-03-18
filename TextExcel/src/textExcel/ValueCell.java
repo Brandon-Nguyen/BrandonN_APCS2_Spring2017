@@ -9,11 +9,10 @@ public class ValueCell extends RealCell{
 		setRealCell(num);
 
 	}
-
-
+	
 	public double getDoubleValue(){
-		String val = getRealCell();
-		return Double.parseDouble(val);
+		System.out.println(Double.parseDouble(getRealCell()));
+		return Double.parseDouble(getRealCell());
 	}
 
 }

@@ -1,0 +1,106 @@
+package textExcel;
+
+abstract class RealCell implements Cell {
+	
+	private String cellContent;
+	
+	public String getRealCell(){
+		return cellContent;
+	}
+	public void setRealCell(String value){
+		cellContent = value;
+		
+	}
+	
+	public String abbreviatedCellText() {
+		// TODO Auto-generated method stub
+		return checkZeroes(padAndTruncate());
+	}
+
+	public String fullCellText() {
+		// TODO Auto-generated method stub
+		String returnVal = cellContent;
+		double holder = 0.0;
+		if(returnVal.contains("%")){
+			returnVal = returnVal.substring(0, returnVal.length() - 1);
+			holder = Double.parseDouble(returnVal);
+			holder = holder / 100.0;
+		}else{
+			holder = Double.parseDouble(returnVal);
+		}
+		returnVal = Double.toString(holder);
+		
+		if(returnVal.substring(returnVal.length() - 2, returnVal.length()).equals(".0")){
+			System.out.println(returnVal.substring(0, returnVal.length() - 2) + "ur right :D");
+			if(returnVal.substring(0,returnVal.indexOf(".0")).length() <= 1 || returnVal.contains("-")){
+				System.out.println(returnVal + " I am first");
+				//returnVal += ".0";
+				return returnVal;
+			}else{
+				System.out.println(returnVal.substring(0, returnVal.length() - 2) + " I am 2nd");
+				return returnVal.substring(0,returnVal.length() - 2);
+			}
+		}else{
+			System.out.println(checkZeroes(returnVal));
+			return checkZeroes(returnVal);
+		}
+
+	}
+	
+	
+	public String padAndTruncate(){
+		String returnVal = cellContent;
+		if(returnVal.contains("%")){
+			returnVal = returnVal.substring(0, returnVal.indexOf("."));
+			returnVal += "%";
+		}
+
+		if(!returnVal.contains(".") && !returnVal.contains("%") ){
+			returnVal += ".0";
+		}
+		checkZeroes(returnVal);
+		System.out.println(returnVal.length());
+		System.out.println(returnVal);
+		if(returnVal.length() >= 10){
+			returnVal = cellContent.substring(0, 10);
+
+		}else{
+			while(returnVal.length() != 10){
+				returnVal += " ";
+				System.out.println(returnVal.length());
+
+			}
+
+		}
+		
+		return returnVal;
+	}
+	
+	abstract double getDoubleValue();
+
+	public String checkZeroes(String value){
+		System.out.println(value);
+		int continuousZero = 0;
+		int countZero = 0;
+		int count = value.length() - 1;
+		System.out.println("Count at" + count);
+		while(count != 0){
+			if(countZero >= 2){
+				continuousZero = countZero;
+				System.out.println("Number of zeroes at" + continuousZero);
+			}
+			if(value.charAt(count) == '0' && value.charAt(count - 1) != '.'){
+				countZero++;
+				System.out.println("Count Zero at" + countZero);
+			}else{
+				countZero = 0;
+				System.out.println("Count Zero at" + countZero);
+			}
+			count--;
+			System.out.println("Count at" + count);
+		}
+		System.out.println("return value " + value.substring(0, value.length() - (continuousZero)));
+		return value.substring(0, value.length() - (continuousZero));
+	}
+	
+}

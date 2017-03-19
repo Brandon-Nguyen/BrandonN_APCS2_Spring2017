@@ -18,11 +18,15 @@ public class TextExcel
 		
 		Scanner input = new Scanner(System.in);
 		String command = "";
-		while(command.equals("quit") != true){
+		
+		RealCell cell = new ValueCell("3.00");
+		System.out.println(cell.abbreviatedCellText());
+		
+		/*while(command.equals("quit") != true){
 			System.out.println("What do you want to do?");
 			command = input.nextLine();
 			System.out.println(excel.processCommand(command));
-		}
+		}*/
 	}
 		
 }

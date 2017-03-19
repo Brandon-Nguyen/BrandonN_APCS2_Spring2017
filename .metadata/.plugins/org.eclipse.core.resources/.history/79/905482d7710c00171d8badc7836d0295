@@ -6,12 +6,12 @@ public class ValueCell extends RealCell{
 	
 	public ValueCell(String num){
 		this.value = num;
-		// saves value into super class of RealCell
 		setRealCell(num);
 
 	}
 	
 	public double getDoubleValue(){
+		System.out.println(Double.parseDouble(getRealCell()));
 		return Double.parseDouble(getRealCell());
 	}
 

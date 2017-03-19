@@ -18,7 +18,7 @@ public class Spreadsheet implements Grid
 	public String processCommand(String command)
 	{
 		//checks to see if the input is anything, if not just ends here
-		if(command.length() == 0 || command.equals("quit")){
+		if(command.length() == 0){
 			return "";
 		}
 		
@@ -87,7 +87,7 @@ public class Spreadsheet implements Grid
 			return getGridText();
 			
 			//checks for decimal or any numbers inside the input
-		}else if(command.contains(".") || split[2].matches(".*\\d+.*")){
+		}else if(command.contains(".") || split[2].contains("[0-9]+")){
 			setValueCell(split[0], split[2]);
 			return getGridText();
 		}

@@ -18,7 +18,7 @@ public class Spreadsheet implements Grid
 	public String processCommand(String command)
 	{
 		//checks to see if the input is anything, if not just ends here
-		if(command.length() == 0 || command.equals("quit")){
+		if(command.length() == 0){
 			return "";
 		}
 		

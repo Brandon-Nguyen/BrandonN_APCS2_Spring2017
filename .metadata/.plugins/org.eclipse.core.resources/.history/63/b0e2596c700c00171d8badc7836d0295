@@ -1,4 +1,3 @@
-//Brandon Nguyen, 2nd Period
 package textExcel;
 
 abstract class RealCell implements Cell {
@@ -15,38 +14,39 @@ abstract class RealCell implements Cell {
 	
 	public String abbreviatedCellText() {
 		
-		//calls padAndTruncate to pad the value to ten spaces, or end the character by 10 spaces
-		return padAndTruncate();
+		//
+		return checkZeroes(padAndTruncate());
 	}
 
 	public String fullCellText() {
 
 		String returnVal = cellContent;
 		double holder = 0.0;
-		
-		//checks to see if the value is a percentage or just a number
+		//
 		if(returnVal.contains("%")){
+			returnVal = returnVal.substring(0, returnVal.length() - 1);
 			holder = getDoubleValue();
+		
+		//
 		}else{
 			holder = Double.parseDouble(returnVal);
 		}
-		
-		//converts the number to a string
+		//
 		returnVal = Double.toString(holder);
 		
-		//checks to see if the number ends with a .0
+		//
 		if(returnVal.substring(returnVal.length() - 2, returnVal.length()).equals(".0")){
 			
-			//checks to see if the number is negative, or if it only has 1 whole number in it
-			if(returnVal.substring(0 , returnVal.indexOf(".0")).length() <= 1 || returnVal.contains("-")){
+			//
+			if(returnVal.substring(0,returnVal.indexOf(".0")).length() <= 1 || returnVal.contains("-")){
 				return returnVal;
 				
-				//if the number isn't just one whole number or negative, then cuts off the .0
+				//
 			}else{
 				return returnVal.substring(0,returnVal.length() - 2);
 			}
 			
-		//if it doesn't end in a .0, then checks for unnecessary zeroes to possibly cut out
+		//
 		}else{
 			return checkZeroes(returnVal);
 		}
@@ -71,8 +71,13 @@ abstract class RealCell implements Cell {
 			returnVal = returnVal.substring(0, returnVal.length() - 1);
 		}
 		
-		//checks to see if there is a percent sign and takes off the decimal point
+		//
 		if(returnVal.contains("%")){
+			if(returnVal.charAt(returnVal.indexOf('.') + 1) >= 5){
+				int round = returnVal.charAt(returnVal.indexOf('.') - 1);
+				returnVal = returnVal.substring(0, returnVal.indexOf('.') - 1);
+				returnVal += round + 1;
+			}
 			returnVal = returnVal.substring(0, returnVal.indexOf('.'));
 			returnVal += "%";
 		}
@@ -86,6 +91,7 @@ abstract class RealCell implements Cell {
 		}else{
 			while(returnVal.length() != 10){
 				returnVal += " ";
+
 			}
 
 		}
@@ -96,34 +102,28 @@ abstract class RealCell implements Cell {
 	abstract double getDoubleValue();
 
 	public String checkZeroes(String value){
+		System.out.println(value);
 		int continuousZero = 0;
 		int countZero = 0;
 		int count = value.length() - 1;
-		
-		// keeps going until the count hits the start of the value or zero
+		System.out.println("Count at" + count);
 		while(count != 0){
-			//checks for two zeroes in a row and saves the value to continuosZero
 			if(countZero >= 2){
 				continuousZero = countZero;
-
+				System.out.println("Number of zeroes at" + continuousZero);
 			}
-			
-			//checks for zeros or if the value is at a .0 (which it doesn't count)
 			if(value.charAt(count) == '0' && value.charAt(count - 1) != '.'){
 				countZero++;
-
+				System.out.println("Count Zero at" + countZero);
 			}else{
-				// if its anything but a zero without a decimal point near it reset the count for zeroes
 				countZero = 0;
-
+				System.out.println("Count Zero at" + countZero);
 			}
-			//decrement by one to go down the value
 			count--;
-
+			System.out.println("Count at" + count);
 		}
-		
-		//returns the value after substrining the amount of unnecessary zereos
-		return value.substring(0, value.length() - continuousZero);
+		System.out.println("return value " + value.substring(0, value.length() - (continuousZero + 1)));
+		return value.substring(0, value.length() - (continuousZero));
 	}
 	
 }

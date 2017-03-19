@@ -1,4 +1,3 @@
-//Brandon Nguyen, 2nd Period
 package textExcel;
 
 abstract class RealCell implements Cell {

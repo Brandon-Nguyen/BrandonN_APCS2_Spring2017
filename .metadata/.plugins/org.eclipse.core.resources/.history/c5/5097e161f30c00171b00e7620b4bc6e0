@@ -81,17 +81,19 @@ public class Spreadsheet implements Grid
 			setPercentCell(split[0], split[2]);
 			return getGridText();
 			
-			//checks for any sort of operators to call formula cell
-		}else if(command.contains("-") || command.contains("+") || command.contains("/") || command.contains("*") 
-				&& split.length > 3){
-			setFormulaCell(split[0], split[2]);
-			return getGridText();
-			
-			//if there isn't anything then it has to be a value cell
-		}else{
+			//checks for decimal or any numbers inside the input
+		}else if(command.contains(".") || split[2].matches(".*\\d+.*")){
 			setValueCell(split[0], split[2]);
 			return getGridText();
+			
+			//checks for any sort of operators to call formula cell
+		}else if(command.contains("-") || command.contains("+") || command.contains("/") || command.contains("*")){
+			setFormulaCell(split[0], split[2]);
+			return getGridText();
 		}
+		
+		// if nothing above works, will return this string containing nothing
+		return "";
 	}
 
 	@Override

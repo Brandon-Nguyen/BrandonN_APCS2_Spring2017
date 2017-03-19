@@ -87,11 +87,14 @@ public class Spreadsheet implements Grid
 			setFormulaCell(split[0], split[2]);
 			return getGridText();
 			
-			//if there isn't anything then it has to be a value cell
-		}else{
+			//checks for decimal or any numbers inside the input
+		}else if(command.contains(".") || split[2].matches(".*\\d+.*")){
 			setValueCell(split[0], split[2]);
 			return getGridText();
 		}
+		
+		// if nothing above works, will return this string containing nothing
+		return "";
 	}
 
 	@Override

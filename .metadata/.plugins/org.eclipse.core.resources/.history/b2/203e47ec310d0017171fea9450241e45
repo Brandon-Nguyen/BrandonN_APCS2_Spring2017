@@ -2,7 +2,6 @@
 package textExcel;
 
 import java.util.Arrays;
-import java.io.*;
 
 // Update this file with your own code.
 
@@ -24,7 +23,7 @@ public class Spreadsheet implements Grid
 		}
 		
 		//splits the input by spaces
-		String[] split = command.split(" ", 3);
+		String[] split = command.split(" ");
 		
 		//gets rid of issue if the input has lowercases or uppercases
 		// for columns
@@ -57,10 +56,42 @@ public class Spreadsheet implements Grid
 			
 		//checks the length, if more than three,
 		//then use to set values at a cell
-		}else{
-			setCellValue(split[0], split[2]);
+		}else if(command.contains("\"")){
+			
+			//incase the input has multiple spaces so there are multiple splits
+			//for the input or value being set
+			//sets for the first value or string
+			String combinedStr = split[2];
+			
+			//the next value of the split array
+			int i = 3;
+			while(i < split.length){
+				//adds the space that was taken out and the next part of the value
+				combinedStr += " " + split[i];
+				i++;
+			}
+			
+			//calls method to set the cell
+			setCellValue(split[0] ,combinedStr);
+			// returns the new grid with the new cell and value
 			return getGridText();
-		}			
+			
+			//checks to see if it has a percentage
+		}else if(command.contains("%")){
+			setPercentCell(split[0], split[2]);
+			return getGridText();
+			
+			//checks for any sort of operators to call formula cell
+		}else if(command.contains("-") || command.contains("+") || command.contains("/") || command.contains("*") 
+				&& split.length > 3){
+			setFormulaCell(split[0], split[2]);
+			return getGridText();
+			
+			//if there isn't anything then it has to be a value cell
+		}else{
+			setValueCell(split[0], split[2]);
+			return getGridText();
+		}
 	}
 
 	@Override
@@ -118,9 +149,11 @@ public class Spreadsheet implements Grid
 	}
 	
 	public String inspectCell(String cellName){
+		
 		//creating an instance of spreadsheetLocation to use 
 		//the getRow and getCol methods
 		SpreadsheetLocation loc = new SpreadsheetLocation(cellName);
+		
 		//returns the full value of the cell
 		return (getCell(loc).fullCellText());
 	}
@@ -136,6 +169,7 @@ public class Spreadsheet implements Grid
 	}
 	
 	public void newSheet(){
+		
 		//creates a new grid to make everything empty
 		for(int i = 0; i < array.length; i++){
 			for( int j = 0; j < array[i].length; j++){
@@ -148,62 +182,23 @@ public class Spreadsheet implements Grid
 		//creating an instance of spreadsheetLocation to use 
 		//the getRow and getCol methods
 		SpreadsheetLocation area = new SpreadsheetLocation(loc);
-		//checks for quotes
-		if(value.contains("\"")){
-			array[area.getRow()][area.getCol()] = new TextCell(value);
-			//checks to see if it has a percentage
-		}else if(value.contains("%")){
-			array[area.getRow()][area.getCol()] = new PercentCell(value);
-			
-			//checks for parenthesis
-		}else if(value.endsWith(")")){
-			array[area.getRow()][area.getCol()] = new FormulaCell(value);
-			
-			//if there isn't anything then it has to be a value cell
-		}else{
-			array[area.getRow()][area.getCol()] = new ValueCell(value);
-		}
 		
+		//sets the cell at the location to a textCell and assigns it a value
+		array[area.getRow()][area.getCol()] = new TextCell(value);
 	}
 	
-	private String saveData (String filename){ 
-
-	 PrintStream outputFile;
-	
-	 try {
-		 outputFile = new PrintStream(new File(filename));
-	 }
-	
-	 catch (FileNotFoundException e) {
-		 return "File not found: " + filename;
-	 }
-	outputFile.print(getGridText());
-	
-	outputFile.close();
-	return "";
-
+	public void setPercentCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new PercentCell(value);
 	}
 	
-	private String openData (String filename){
-
-	Scanner outputFile;
-	
-	try {
-		outputFile = new Scanner(new File(filename));
+	public void setFormulaCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new FormulaCell(value);
 	}
 	
-	catch (FileNotFoundException e) {
-		return "File not found: " + filename;
-	}
-	
-	while(outputFile.hasNextLine() == true){
-		String data = outputFile.nextLine();
-		System.out.println(data);
-	}
-	
-	outputFile.close();
-	
-	return "";
-
+	public void setValueCell(String loc, String value){
+		SpreadsheetLocation area = new SpreadsheetLocation(loc);
+		array[area.getRow()][area.getCol()] = new ValueCell(value);
 	}
 }

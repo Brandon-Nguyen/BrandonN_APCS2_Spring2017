@@ -2,7 +2,6 @@
 package textExcel;
 
 import java.util.Arrays;
-import java.io.*;
 
 // Update this file with your own code.
 
@@ -60,7 +59,9 @@ public class Spreadsheet implements Grid
 		}else{
 			setCellValue(split[0], split[2]);
 			return getGridText();
-		}			
+		}
+			
+			
 	}
 
 	@Override
@@ -118,9 +119,11 @@ public class Spreadsheet implements Grid
 	}
 	
 	public String inspectCell(String cellName){
+		
 		//creating an instance of spreadsheetLocation to use 
 		//the getRow and getCol methods
 		SpreadsheetLocation loc = new SpreadsheetLocation(cellName);
+		
 		//returns the full value of the cell
 		return (getCell(loc).fullCellText());
 	}
@@ -136,6 +139,7 @@ public class Spreadsheet implements Grid
 	}
 	
 	public void newSheet(){
+		
 		//creates a new grid to make everything empty
 		for(int i = 0; i < array.length; i++){
 			for( int j = 0; j < array[i].length; j++){
@@ -148,14 +152,15 @@ public class Spreadsheet implements Grid
 		//creating an instance of spreadsheetLocation to use 
 		//the getRow and getCol methods
 		SpreadsheetLocation area = new SpreadsheetLocation(loc);
-		//checks for quotes
+		//sets the cell at the location to a textCell and assigns it a value
+		
 		if(value.contains("\"")){
 			array[area.getRow()][area.getCol()] = new TextCell(value);
 			//checks to see if it has a percentage
 		}else if(value.contains("%")){
 			array[area.getRow()][area.getCol()] = new PercentCell(value);
 			
-			//checks for parenthesis
+			//checks for any sort of operators to call formula cell
 		}else if(value.endsWith(")")){
 			array[area.getRow()][area.getCol()] = new FormulaCell(value);
 			
@@ -164,46 +169,5 @@ public class Spreadsheet implements Grid
 			array[area.getRow()][area.getCol()] = new ValueCell(value);
 		}
 		
-	}
-	
-	private String saveData (String filename){ 
-
-	 PrintStream outputFile;
-	
-	 try {
-		 outputFile = new PrintStream(new File(filename));
-	 }
-	
-	 catch (FileNotFoundException e) {
-		 return "File not found: " + filename;
-	 }
-	outputFile.print(getGridText());
-	
-	outputFile.close();
-	return "";
-
-	}
-	
-	private String openData (String filename){
-
-	Scanner outputFile;
-	
-	try {
-		outputFile = new Scanner(new File(filename));
-	}
-	
-	catch (FileNotFoundException e) {
-		return "File not found: " + filename;
-	}
-	
-	while(outputFile.hasNextLine() == true){
-		String data = outputFile.nextLine();
-		System.out.println(data);
-	}
-	
-	outputFile.close();
-	
-	return "";
-
 	}
 }

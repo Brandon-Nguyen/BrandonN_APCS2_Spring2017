@@ -60,7 +60,9 @@ public class Spreadsheet implements Grid
 		}else{
 			setCellValue(split[0], split[2]);
 			return getGridText();
-		}			
+		}
+			
+			
 	}
 
 	@Override
@@ -186,23 +188,19 @@ public class Spreadsheet implements Grid
 	
 	private String openData (String filename){
 
-	Scanner outputFile;
+	PrintStream outputFile;
 	
 	try {
-		outputFile = new Scanner(new File(filename));
+		outputFile = new PrintStream(new File(filename));
 	}
 	
 	catch (FileNotFoundException e) {
 		return "File not found: " + filename;
 	}
 	
-	while(outputFile.hasNextLine() == true){
-		String data = outputFile.nextLine();
-		System.out.println(data);
-	}
+
 	
 	outputFile.close();
-	
 	return "";
 
 	}

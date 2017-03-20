@@ -1,4 +1,3 @@
-//Brandon Nguyen, 2nd Period
 package textExcel;
 
 public class ValueCell extends RealCell{

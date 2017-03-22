@@ -204,11 +204,11 @@ public class Spreadsheet implements Grid
 		
 		for(int i = 0; i < getRows(); i++){
 			for(int j = 0; i < getCols(); j++){
-				String cell = ""; 
-				cell += (char)(j + 'A');
-				cell += i + 1;
-				SpreadsheetLocation loc = new SpreadsheetLocation(cell);
-				if(!(getCell(loc) instanceof EmptyCell)){
+				if(!(array[i][j] instanceof EmptyCell)){
+					String cell = ""; 
+					cell += (char)(j + 'A');
+					cell += i + 1;
+					SpreadsheetLocation loc = new SpreadsheetLocation(cell);
 					outputFile.println(cell + "," + cellType(loc) + "," + array[i][j].fullCellText());
 				}
 			}

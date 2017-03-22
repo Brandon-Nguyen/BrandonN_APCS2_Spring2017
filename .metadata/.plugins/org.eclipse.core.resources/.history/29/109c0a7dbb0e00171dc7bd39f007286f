@@ -33,14 +33,15 @@ public class Spreadsheet implements Grid
 		// for columns
 		split[0] = split[0].toUpperCase();
 		
-		if(split[0].equals("SAVE")){
-			System.out.println("saved to: " + split[1]);
+		System.out.println(split[0] + "  " + split[1]);
+		if(!(command.indexOf("SAVE") < 0)){
 			return saveData(split[1]);
+			
 		}
-		
-		if(split[0].equals("OPEN")){
-			System.out.println("opened from: " + split[1]);
+		if(!(command.indexOf("OPEN") < 0)){
 			return openData(split[1]);
+			
+			
 		}
 		//checks to see if the input is only 3 characters or less
 		//which could only be a cell and returns the value
@@ -204,11 +205,11 @@ public class Spreadsheet implements Grid
 		
 		for(int i = 0; i < getRows(); i++){
 			for(int j = 0; i < getCols(); j++){
-				String cell = ""; 
-				cell += (char)(j + 'A');
-				cell += i + 1;
-				SpreadsheetLocation loc = new SpreadsheetLocation(cell);
-				if(!(getCell(loc) instanceof EmptyCell)){
+				if(array[i][j] instanceof EmptyCell != true){
+					String cell = ""; 
+					cell += (char)(i + 'A');
+					cell += j + 1;
+					SpreadsheetLocation loc = new SpreadsheetLocation(cell);
 					outputFile.println(cell + "," + cellType(loc) + "," + array[i][j].fullCellText());
 				}
 			}

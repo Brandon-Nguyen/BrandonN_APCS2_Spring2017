@@ -33,13 +33,13 @@ public class Spreadsheet implements Grid
 		// for columns
 		split[0] = split[0].toUpperCase();
 		
+		//checks to see if the input has save in it
 		if(split[0].equals("SAVE")){
-			System.out.println("saved to: " + split[1]);
 			return saveData(split[1]);
 		}
 		
+		// checks for an open in the input
 		if(split[0].equals("OPEN")){
-			System.out.println("opened from: " + split[1]);
 			return openData(split[1]);
 		}
 		//checks to see if the input is only 3 characters or less
@@ -69,6 +69,7 @@ public class Spreadsheet implements Grid
 			}
 			
 		}else{
+			//returns the value of the cell
 			return inspectCell(split[0]);
 		}			
 	}
@@ -177,8 +178,8 @@ public class Spreadsheet implements Grid
 	}
 	
 	public String cellType(Location loc){
+		//tests for the type of cell and returns the type of cell as a string
 		Cell cell = getCell(loc);
-		
 		if(cell instanceof TextCell){
 			return "TextCell";
 		}else if(cell instanceof PercentCell){
@@ -204,10 +205,12 @@ public class Spreadsheet implements Grid
 		
 		for(int i = 0; i < 12; i++){
 			for(int j = 0; j < 20; j++){
+				//makes the name or location of the cell
 				String cell = ""; 
 				cell += (char)(i + 'A');
 				cell += j + 1;
 				SpreadsheetLocation loc = new SpreadsheetLocation(cell);
+				//if the cell isnt an empty cell, it sends the file the contents
 				if(!(array[j][i] instanceof EmptyCell)){
 					outputFile.println(cell + "," + cellType(loc) + "," + array[j][i].fullCellText());
 				}
@@ -230,13 +233,16 @@ public class Spreadsheet implements Grid
 		}
 		
 		while(outputFile.hasNextLine()){
+			//splits the line of the file by the commas
 			String[] data = outputFile.nextLine().split(",");
+			//adds the percentage to the percent cell value
 			if(data[1].equals("PercentCell")){
 				double holder = Double.parseDouble(data[2]);
 				holder = holder * 100.0;
 				data[2] = Double.toString(holder);
 				data[2] += "%";
 			}
+			//sets the value of the cell
 			setCellValue(data[0], data[2]);
 		}
 		outputFile.close();

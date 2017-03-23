@@ -27,8 +27,10 @@ abstract class RealCell implements Cell {
 		//checks to see if the value is a percentage or just a number
 		if(returnVal.contains("%")){
 			holder = getDoubleValue();
+			//if its a formula, just return the cell value, don't alter it
 		}else if(returnVal.indexOf(")") == returnVal.length() - 1){
 			return returnVal;
+			//if the content of the cell is 0, dont change it, just return 0
 		}else if(returnVal.equals("0")){
 			return "0";
 		}else{
@@ -86,14 +88,13 @@ abstract class RealCell implements Cell {
 		// or adds spaces to fill it up to ten spaces
 		if(returnVal.length() >= 10){
 			returnVal = cellContent.substring(0, 10);
-
+			
 		}else{
+			
 			while(returnVal.length() != 10){
 				returnVal += " ";
 			}
-
 		}
-		
 		return returnVal;
 	}
 	

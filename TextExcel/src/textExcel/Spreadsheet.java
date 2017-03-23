@@ -203,11 +203,11 @@ public class Spreadsheet implements Grid
 		}
 		
 		for(int i = 0; i < 12; i++){
-			for(int j = 0; i < 20; j++){
+			for(int j = 0; j < 20; j++){
 				String cell = ""; 
 				cell += (char)(i + 'A');
 				cell += j + 1;
-				System.out.println(cell);
+				//System.out.println(cell);
 				SpreadsheetLocation loc = new SpreadsheetLocation(cell);
 				if(!(array[j][i] instanceof EmptyCell)){
 					System.out.println(cell + "," + cellType(loc) + "," + array[j][i].fullCellText());
@@ -215,6 +215,7 @@ public class Spreadsheet implements Grid
 				}
 			}
 		}
+		System.out.println(outputFile);
 		outputFile.close();
 		return "";
 	}
@@ -234,11 +235,17 @@ public class Spreadsheet implements Grid
 		while(outputFile.hasNextLine()){
 			String[] data = outputFile.nextLine().split(",");
 			System.out.println(Arrays.toString(data));
+			if(data[1].equals("PercentCell")){
+				double holder = Double.parseDouble(data[2]);
+				holder = holder * 100.0;
+				data[2] = Double.toString(holder);
+				data[2] += "%";
+			}
 			setCellValue(data[0], data[2]);
 		}
 		
 		outputFile.close();
-		return "";
+		return getGridText();
 
 	}
 }

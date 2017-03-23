@@ -27,10 +27,6 @@ abstract class RealCell implements Cell {
 		//checks to see if the value is a percentage or just a number
 		if(returnVal.contains("%")){
 			holder = getDoubleValue();
-		}else if(returnVal.indexOf(")") == returnVal.length() - 1){
-			return returnVal;
-		}else if(returnVal.equals("0")){
-			return "0";
 		}else{
 			holder = Double.parseDouble(returnVal);
 		}

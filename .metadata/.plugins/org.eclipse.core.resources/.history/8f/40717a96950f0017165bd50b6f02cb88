@@ -29,8 +29,6 @@ abstract class RealCell implements Cell {
 			holder = getDoubleValue();
 		}else if(returnVal.indexOf(")") == returnVal.length() - 1){
 			return returnVal;
-		}else if(returnVal.equals("0")){
-			return "0";
 		}else{
 			holder = Double.parseDouble(returnVal);
 		}

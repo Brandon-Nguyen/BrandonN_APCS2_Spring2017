@@ -202,21 +202,21 @@ public class Spreadsheet implements Grid
 			return "File not found: " + filename;
 		}
 		
-		for(int i = 0; i < getRows(); i++){
-			for(int j = 0; i < getCols(); j++){
+		for(int i = 0; i < 12; i++){
+			for(int j = 0; i < 20; j++){
 				String cell = ""; 
-				cell += (char)(j + 'A');
-				cell += i + 1;
+				cell += (char)(i + 'A');
+				cell += j + 1;
+				System.out.println(cell);
 				SpreadsheetLocation loc = new SpreadsheetLocation(cell);
-				if(!(getCell(loc) instanceof EmptyCell)){
-					outputFile.println(cell + "," + cellType(loc) + "," + array[i][j].fullCellText());
+				if(!(array[j][i] instanceof EmptyCell)){
+					System.out.println(cell + "," + cellType(loc) + "," + array[j][i].fullCellText());
+					outputFile.println(cell + "," + cellType(loc) + "," + array[j][i].fullCellText());
 				}
 			}
 		}
-	
 		outputFile.close();
 		return "";
-
 	}
 	
 	private String openData (String filename){
@@ -231,13 +231,13 @@ public class Spreadsheet implements Grid
 			return "File not found: " + filename;
 		}
 		
-		while(outputFile.hasNextLine() == true){
+		while(outputFile.hasNextLine()){
 			String[] data = outputFile.nextLine().split(",");
+			System.out.println(Arrays.toString(data));
 			setCellValue(data[0], data[2]);
 		}
 		
 		outputFile.close();
-		
 		return "";
 
 	}

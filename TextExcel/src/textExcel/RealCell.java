@@ -62,7 +62,10 @@ abstract class RealCell implements Cell {
 	
 	public String padAndTruncate(){
 		String returnVal = cellContent;
-		
+		if(returnVal.charAt(0) == '('){
+			returnVal = Double.toString(getDoubleValue());
+			//System.out.println(returnVal);
+		}
 		//if its a whole number without a percent, make it a double by adding .0 to it
 		if(!returnVal.contains(".") && !returnVal.contains("%") ){
 			returnVal += ".0";
@@ -70,24 +73,25 @@ abstract class RealCell implements Cell {
 		
 		//gets rid of unnecessary zeroes at the end of the value
 		returnVal = checkZeroes(returnVal);
-		
+		//System.out.println(returnVal);
 		//checks for unnecessary zeroes again and cuts off the last one
 		//to make it a .0 if there is
 		if(returnVal.indexOf(".00") + 3 == returnVal.length()){
 			returnVal = returnVal.substring(0, returnVal.length() - 1);
 		}
-		
+		//System.out.println(returnVal);
 		//checks to see if there is a percent sign and takes off the decimal point
 		if(returnVal.contains("%")){
 			returnVal = returnVal.substring(0, returnVal.indexOf('.'));
 			returnVal += "%";
 		}
-		
+		//System.out.println(returnVal);
 		//checks to see if the value is longer than 10, 
 		// if it is it cuts it off at the tenth character,
 		// or adds spaces to fill it up to ten spaces
+		//System.out.println(returnVal);
 		if(returnVal.length() >= 10){
-			returnVal = cellContent.substring(0, 10);
+			returnVal = returnVal.substring(0, 10);
 			
 		}else{
 			
@@ -95,6 +99,7 @@ abstract class RealCell implements Cell {
 				returnVal += " ";
 			}
 		}
+		//System.out.println(returnVal);
 		return returnVal;
 	}
 	
@@ -127,7 +132,7 @@ abstract class RealCell implements Cell {
 
 		}
 		
-		//returns the value after substrining the amount of unnecessary zereos
+		//returns the value after substring the amount of unnecessary zereos
 		return value.substring(0, value.length() - continuousZero);
 	}
 	

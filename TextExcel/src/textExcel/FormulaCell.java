@@ -4,10 +4,12 @@ package textExcel;
 public class FormulaCell extends RealCell{
 	
 	private String formula;
+	private Cell[][] grid;
 
-	public FormulaCell(String formula) {
+	public FormulaCell(String formula, Cell[][] spreadsheet) {
 		// TODO Auto-generated constructor stub
 		this.formula = formula;
+		this.grid = spreadsheet;
 		setRealCell(formula);
 	}
 
@@ -17,6 +19,16 @@ public class FormulaCell extends RealCell{
 			//System.out.println(formula[1]);
 			return Double.parseDouble(formula[1]);
 		}
+		
+		/*if(formula[1].equals("avg")){
+			while(formula[2] != formula[4]){
+				avg(formula[2], 0, 0, formula[4]);
+			}
+		}else{
+			
+		}*/
+		if(!(formula[1].equals("avg")) && !(formula[1].equals("SUM")) 
+				&& ((formula[2])))
 		double storeVal = 0.0;
 		for(int i = 1; i < formula.length - 2; i += 2 ){
 			double num = Double.parseDouble(formula[i]);
@@ -39,4 +51,23 @@ public class FormulaCell extends RealCell{
 		}
 		return storeVal;
 	}
+	
+	/*public double avg(String cell, double sum, int count, String end){
+		SpreadsheetLocation loc = new SpreadsheetLocation(cell);
+		if(cell.equals(end)){
+			SpreadsheetLocation area = new SpreadsheetLocation(end);
+			sum += Double.parseDouble(grid[loc.getRow()][loc.getCol()].fullCellText())
+					* Double.parseDouble(grid[area.getRow()][area.getCol()].fullCellText());
+			sum = sum / (double)count;
+			return sum;
+		}else{
+			double first = 
+					Double.parseDouble(grid[loc.getRow()][loc.getCol()].fullCellText());
+			double second = 
+					Double.parseDouble(grid[loc.getRow() + 1][loc.getCol() + 1].fullCellText());
+			sum += first * second;
+			
+		}
+		
+	}*/
 }

@@ -168,7 +168,7 @@ public class Spreadsheet implements Grid
 			
 			//checks for parenthesis
 		}else if(value.endsWith(")")){
-			array[area.getRow()][area.getCol()] = new FormulaCell(value);
+			array[area.getRow()][area.getCol()] = new FormulaCell(value, array);
 			
 			//if there isn't anything then it has to be a value cell
 		}else{

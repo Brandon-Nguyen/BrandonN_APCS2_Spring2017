@@ -16,16 +16,17 @@ public class FormulaCell extends RealCell{
 	public double getDoubleValue(){
 		String[] formula = getRealCell().split(" ");
 		if(formula.length == 3){
-			//System.out.println(formula[1]);
+			System.out.println(formula[1]);
 			return Double.parseDouble(formula[1]);
 		}
 		if((formula[1].toUpperCase().equals("AVG")) || (formula[1].toUpperCase().equals("SUM"))){
 			double count = 1.0;
-		
-			int startRow = Integer.parseInt(formula[2].substring(1));
+			formula[2] = formula[2].toUpperCase();
+			System.out.println(formula[2]);
+			int startRow = Integer.parseInt(formula[2].toUpperCase().substring(1, formula[2].indexOf('-')));
 			int startCol = formula[2].charAt(0) + 'A';
-			int endRow = Integer.parseInt(formula[4].substring(1));
-			int endCol = formula[4].charAt(0) + 'A';
+			int endRow = Integer.parseInt(formula[2].toUpperCase().substring(formula[2].indexOf('-') + 2));
+			int endCol = formula[2].charAt(formula[2].indexOf('-') + 1) + 'A';
 			System.out.println(startRow);
 			System.out.println(startCol);
 			System.out.println(endRow);
@@ -47,8 +48,10 @@ public class FormulaCell extends RealCell{
 			}
 			
 			if(formula[1].equals("avg")){
-				System.out.println(avg(formula[2], 0.0, count, formula[4]));
-				return avg(formula[2], 0.0, count, formula[4]);
+				System.out.println(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')) + " " + 
+						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
+				return avg(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 0.0, count, 
+						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
 			}
 			/*}else{
 				return sum();
@@ -61,27 +64,42 @@ public class FormulaCell extends RealCell{
 			for(int i = 1; i < formula.length - 2; i += 2 ){
 				double num = 0.0;
 				double secondNum = 0.0;
-				if(formula[i].contains("[a-zA-Z]+") || formula[i + 2].contains("[a-zA-Z]+")){
-					if(formula[i].contains("[a-zA-Z]+")){
-						System.out.println(formula[i]);
+				if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <='L' 
+						&& formula[i+2].toUpperCase().charAt(0) >= 'A' 
+						&& formula[i+2].toUpperCase().charAt(0) <= 'L' ){
+					//System.out.println(formula[i]);
+					SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
+					//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
+					formula[i] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
+					
+					formula[i+2] = formula[i+2].toUpperCase();
+					SpreadsheetLocation cell2 = new SpreadsheetLocation(formula[i + 2]);
+					//System.out.println(formula[i + 2]);
+					formula[i + 2] = grid[cell2.getRow()][cell2.getCol()].abbreviatedCellText();
+					//System.out.println(formula[i + 2]);
+				}else if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <= 'L'){
+						formula[i] = formula[i].toUpperCase();
+						//System.out.println(formula[i]);
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
-						num = Double.parseDouble(grid[cell.getRow()][cell.getCol()].fullCellText());
-						System.out.println(num);
-					}else{
+						//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
+						formula[i] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
+
+				}else if(formula[i + 2].toUpperCase().charAt(0) >= 'A' && formula[i + 2].toUpperCase().charAt(0) <= 'L'){
+						formula[i+2] = formula[i+2].toUpperCase();
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i + 2]);
-						System.out.println(formula[i + 2]);
-						secondNum = Double.parseDouble(grid[cell.getRow()][cell.getCol()].fullCellText());
-						System.out.println(secondNum);
-					}
-				}else{
-					num = Double.parseDouble(formula[i]);
-					System.out.println(num);
-					secondNum = Double.parseDouble(formula[i + 2]);
-					System.out.println(secondNum);
+						//System.out.println(formula[i + 2]);
+						formula[i + 2] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
+						//System.out.println(secondNum);
 				}
+				
+				num = Double.parseDouble(formula[i]);
+				System.out.println(num);
+				secondNum = Double.parseDouble(formula[i + 2]);
+				System.out.println(secondNum);
 				
 				if(formula[i + 1].equals("*")){
 					storeVal = num * secondNum;
+					
 				}else if(formula[i + 1].equals("/")){
 					storeVal = num / secondNum;
 				}else if(formula[i + 1].equals("+")){
@@ -93,6 +111,7 @@ public class FormulaCell extends RealCell{
 				System.out.println(formula[i+2]);
 				System.out.println(storeVal);
 			}
+			System.out.println(storeVal);
 			return storeVal;
 		}
 		return 0.0;
@@ -122,6 +141,5 @@ public class FormulaCell extends RealCell{
 			return sum;
 			
 		}
-		
 	}
 }

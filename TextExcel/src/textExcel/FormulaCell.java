@@ -35,7 +35,7 @@ public class FormulaCell extends RealCell{
 				if(startCol != endCol){
 					for(int j = startRow; j <= 20; j++){
 						count++;
-						//System.out.println("count" + count);
+						System.out.println("count" + count);
 					}
 					startRow = 0;
 					
@@ -44,7 +44,7 @@ public class FormulaCell extends RealCell{
 					for(int j = startRow; j <= endRow; j++){
 						count++;
 						
-					//	System.out.println("count" + count);
+						System.out.println("count" + count);
 					}
 				}
 			}
@@ -61,9 +61,6 @@ public class FormulaCell extends RealCell{
 				return (sum(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 
 						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1)));
 			}
-
-		//}else if(){
-			
 		}else{
 			double storeVal = 0.0;
 			for(int i = 1; i < formula.length - 2; i += 2 ){
@@ -126,7 +123,6 @@ public class FormulaCell extends RealCell{
 		if(cell.equals(end)){
 			SpreadsheetLocation something = new SpreadsheetLocation(cell);
 			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()));
-			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()) * 2);
 			return Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText());
 		}
 		if(Integer.parseInt(cell.substring(1)) > Integer.parseInt(end.substring(1))){
@@ -149,6 +145,8 @@ public class FormulaCell extends RealCell{
 			System.out.println("sum of 1 and 2 " + sum);
 			String newCell = "";
 			//System.out.println(newCell);
+			
+			//fix here........ maybe broken here
 			if(cell.charAt(0) == end.charAt(0) && Integer.parseInt(cell.substring(1)) < 20){
 				newCell = cell.charAt(0) + "";
 				newCell += Integer.parseInt(cell.substring(1)) + 2;

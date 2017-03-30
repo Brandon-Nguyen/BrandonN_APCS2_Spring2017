@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="A_Final" project="TextExcel" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="textExcel.TestsALL.A_Final" time="0.401">
+    <testcase name="testFileIOComplex" classname="textExcel.TestsALL.A_Final" time="0.375"/>
+    <testcase name="testSaveFormat" classname="textExcel.TestsALL.A_Final" time="0.007"/>
+    <testcase name="testFileIOSimple" classname="textExcel.TestsALL.A_Final" time="0.019"/>
+  </testsuite>
+</testrun>

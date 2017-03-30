@@ -20,42 +20,47 @@ public class FormulaCell extends RealCell{
 			return Double.parseDouble(formula[1]);
 		}
 		if((formula[1].toUpperCase().equals("AVG")) || (formula[1].toUpperCase().equals("SUM"))){
-			double count = 1.0;
+			double count = 0.0;
 			formula[2] = formula[2].toUpperCase();
-			System.out.println(formula[2]);
+			//System.out.println("thingy" + formula[2]);
 			int startRow = Integer.parseInt(formula[2].toUpperCase().substring(1, formula[2].indexOf('-')));
 			int startCol = formula[2].charAt(0) + 'A';
 			int endRow = Integer.parseInt(formula[2].toUpperCase().substring(formula[2].indexOf('-') + 2));
 			int endCol = formula[2].charAt(formula[2].indexOf('-') + 1) + 'A';
-			System.out.println(startRow);
-			System.out.println(startCol);
-			System.out.println(endRow);
-			System.out.println(endCol);
+			//System.out.println("start r" + startRow);
+			//System.out.println("start c" + startCol);
+			//System.out.println("end r" + endRow);
+			//System.out.println("end c" + endCol);
 			for(int i = startCol; i <= endCol; i++ ){
 				if(startCol != endCol){
 					for(int j = startRow; j <= 20; j++){
 						count++;
-						System.out.println(count);
+						//System.out.println("count" + count);
 					}
 					startRow = 0;
-					System.out.println(startRow);
+					
+					//System.out.println(startRow);
 				}else{
 					for(int j = startRow; j <= endRow; j++){
 						count++;
-						System.out.println(count);
+						
+					//	System.out.println("count" + count);
 					}
 				}
 			}
 			
-			if(formula[1].equals("avg")){
-				System.out.println(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')) + " " + 
-						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
-				return avg(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 0.0, count, 
-						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
+			if(formula[1].toUpperCase().equals("AVG")){
+				//System.out.println("in avg" +formula[2].toUpperCase().substring(0, formula[2].indexOf('-')) + " " + 
+						//formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
+				//System.out.println( "exit " + sum(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 
+						//formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1)) / count);
+				//System.out.println(count);
+				return (sum(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 
+						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1))) / count;
+			}else{
+				return (sum(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 
+						formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1)));
 			}
-			/*}else{
-				return sum();
-			}*/
 
 		//}else if(){
 			
@@ -93,9 +98,9 @@ public class FormulaCell extends RealCell{
 				}
 				
 				num = Double.parseDouble(formula[i]);
-				System.out.println(num);
+				//System.out.println(num);
 				secondNum = Double.parseDouble(formula[i + 2]);
-				System.out.println(secondNum);
+				//System.out.println(secondNum);
 				
 				if(formula[i + 1].equals("*")){
 					storeVal = num * secondNum;
@@ -108,37 +113,55 @@ public class FormulaCell extends RealCell{
 					storeVal = num - secondNum;
 				}
 				formula[i+2] = Double.toString(storeVal);
-				System.out.println(formula[i+2]);
-				System.out.println(storeVal);
+				//System.out.println(formula[i+2]);
+				//System.out.println(storeVal);
 			}
-			System.out.println(storeVal);
+			//System.out.println(storeVal);
 			return storeVal;
 		}
-		return 0.0;
+		//return 0.0;
 	}
 	
-	public double avg(String cell, double sum, double count, String end){
-		SpreadsheetLocation loc = new SpreadsheetLocation(cell);
+	public double sum(String cell, String end){
 		if(cell.equals(end)){
-			SpreadsheetLocation area = new SpreadsheetLocation(end);
-			System.out.println(area);
-			System.out.println(end);
-			sum += Double.parseDouble(grid[loc.getRow()][loc.getCol()].fullCellText())
-					* Double.parseDouble(grid[area.getRow()][area.getCol()].fullCellText());
-			System.out.println(sum);
-			sum = sum / count;
-			System.out.println(sum);
-			return sum;
+			SpreadsheetLocation something = new SpreadsheetLocation(cell);
+			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()));
+			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()) * 2);
+			return Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText());
+		}
+		if(Integer.parseInt(cell.substring(1)) > Integer.parseInt(end.substring(1))){
+			cell = cell.substring(0, 1) + "" + (Integer.parseInt(cell.substring(1))- 1);
+			System.out.println(cell);
+		}
+
+		SpreadsheetLocation loc = new SpreadsheetLocation(cell);
+		if(cell.charAt(0) == end.charAt(0) 
+				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
+			return 0.0;
 		}else{
 			double first = 
-					Double.parseDouble(grid[loc.getRow()][loc.getCol()].fullCellText());
-			System.out.println(first);
+					Double.parseDouble(grid[loc.getRow()][loc.getCol()].abbreviatedCellText());
+			System.out.println(" part of recursion" + first);
 			double second = 
-					Double.parseDouble(grid[loc.getRow() + 1][loc.getCol() + 1].fullCellText());
+					Double.parseDouble(grid[loc.getRow() + 1][loc.getCol()].abbreviatedCellText());
 			System.out.println(second);
-			sum += first * second;
-			System.out.println(sum);
-			return sum;
+			double sum = first + second;
+			System.out.println("sum of 1 and 2 " + sum);
+			String newCell = "";
+			//System.out.println(newCell);
+			if(cell.charAt(0) == end.charAt(0) && Integer.parseInt(cell.substring(1)) < 20){
+				newCell = cell.charAt(0) + "";
+				newCell += Integer.parseInt(cell.substring(1)) + 2;
+				System.out.println("new Cell value" + newCell);
+			}else{
+				//System.out.println("new Cell value" + newCell);
+				newCell = cell.charAt('0') + 1 + "";
+				newCell += 1;
+				System.out.println("new Cell value" + newCell);
+			}
+				
+			System.out.println(sum + sum(newCell, end));
+			return (sum + sum(newCell, end));
 			
 		}
 	}

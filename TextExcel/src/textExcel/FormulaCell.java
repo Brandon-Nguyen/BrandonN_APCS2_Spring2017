@@ -20,36 +20,36 @@ public class FormulaCell extends RealCell{
 			return Double.parseDouble(formula[1]);
 		}
 		if((formula[1].toUpperCase().equals("AVG")) || (formula[1].toUpperCase().equals("SUM"))){
-			double count = 0.0;
-			formula[2] = formula[2].toUpperCase();
-			//System.out.println("thingy" + formula[2]);
-			int startRow = Integer.parseInt(formula[2].toUpperCase().substring(1, formula[2].indexOf('-')));
-			int startCol = formula[2].charAt(0) + 'A';
-			int endRow = Integer.parseInt(formula[2].toUpperCase().substring(formula[2].indexOf('-') + 2));
-			int endCol = formula[2].charAt(formula[2].indexOf('-') + 1) + 'A';
-			//System.out.println("start r" + startRow);
-			//System.out.println("start c" + startCol);
-			//System.out.println("end r" + endRow);
-			//System.out.println("end c" + endCol);
-			for(int i = startCol; i <= endCol; i++ ){
-				if(startCol != endCol){
-					for(int j = startRow; j <= 20; j++){
-						count++;
-						System.out.println("count" + count);
-					}
-					startRow = 0;
-					
-					//System.out.println(startRow);
-				}else{
-					for(int j = startRow; j <= endRow; j++){
-						count++;
-						
-						System.out.println("count" + count);
-					}
-				}
-			}
+			
 			
 			if(formula[1].toUpperCase().equals("AVG")){
+				double count = 0.0;
+				formula[2] = formula[2].toUpperCase();
+				//System.out.println("thingy" + formula[2]);
+				int startRow = Integer.parseInt(formula[2].toUpperCase().substring(1, formula[2].indexOf('-')));
+				int startCol = formula[2].charAt(0) + 'A';
+				int endRow = Integer.parseInt(formula[2].toUpperCase().substring(formula[2].indexOf('-') + 2));
+				int endCol = formula[2].charAt(formula[2].indexOf('-') + 1) + 'A';
+				//System.out.println("start r" + startRow);
+				//System.out.println("start c" + startCol);
+				//System.out.println("end r" + endRow);
+				//System.out.println("end c" + endCol);
+				for(int i = startCol; i <= endCol; i++ ){
+					if(startCol != endCol){
+						for(int j = startRow; j <= 20; j++){
+							count++;
+							System.out.println("count" + count);
+						}
+						startRow = 0;
+						
+						//System.out.println(startRow);
+					}else{
+						for(int j = startRow; j <= endRow; j++){
+							count++;
+							System.out.println("count" + count);
+						}
+					}
+				}
 				//System.out.println("in avg" +formula[2].toUpperCase().substring(0, formula[2].indexOf('-')) + " " + 
 						//formula[2].toUpperCase().substring(formula[2].indexOf('-') + 1));
 				//System.out.println( "exit " + sum(formula[2].toUpperCase().substring(0, formula[2].indexOf('-')), 
@@ -66,27 +66,16 @@ public class FormulaCell extends RealCell{
 			for(int i = 1; i < formula.length - 2; i += 2 ){
 				double num = 0.0;
 				double secondNum = 0.0;
-				if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <='L' 
-						&& formula[i+2].toUpperCase().charAt(0) >= 'A' 
-						&& formula[i+2].toUpperCase().charAt(0) <= 'L' ){
-					//System.out.println(formula[i]);
-					SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
-					//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
-					formula[i] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
-					
-					formula[i+2] = formula[i+2].toUpperCase();
-					SpreadsheetLocation cell2 = new SpreadsheetLocation(formula[i + 2]);
-					//System.out.println(formula[i + 2]);
-					formula[i + 2] = grid[cell2.getRow()][cell2.getCol()].abbreviatedCellText();
-					//System.out.println(formula[i + 2]);
-				}else if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <= 'L'){
+				if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <='L'){
 						formula[i] = formula[i].toUpperCase();
 						//System.out.println(formula[i]);
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
 						//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
 						formula[i] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
 
-				}else if(formula[i + 2].toUpperCase().charAt(0) >= 'A' && formula[i + 2].toUpperCase().charAt(0) <= 'L'){
+				}
+				
+				if(formula[i+2].toUpperCase().charAt(0) >= 'A' && formula[i+2].toUpperCase().charAt(0) <= 'L'){
 						formula[i+2] = formula[i+2].toUpperCase();
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i + 2]);
 						//System.out.println(formula[i + 2]);
@@ -125,7 +114,7 @@ public class FormulaCell extends RealCell{
 			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()));
 			return Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText());
 		}
-		if(Integer.parseInt(cell.substring(1)) > Integer.parseInt(end.substring(1))){
+		if(cell.charAt(0) == end.charAt(0) && Integer.parseInt(cell.substring(1)) > Integer.parseInt(end.substring(1))){
 			cell = cell.substring(0, 1) + "" + (Integer.parseInt(cell.substring(1))- 1);
 			System.out.println(cell);
 		}
@@ -133,8 +122,10 @@ public class FormulaCell extends RealCell{
 		SpreadsheetLocation loc = new SpreadsheetLocation(cell);
 		if(cell.charAt(0) == end.charAt(0) 
 				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
+			System.out.println("ended");
 			return 0.0;
 		}else{
+
 			double first = 
 					Double.parseDouble(grid[loc.getRow()][loc.getCol()].abbreviatedCellText());
 			System.out.println(" part of recursion" + first);
@@ -147,18 +138,19 @@ public class FormulaCell extends RealCell{
 			//System.out.println(newCell);
 			
 			//fix here........ maybe broken here
-			if(cell.charAt(0) == end.charAt(0) && Integer.parseInt(cell.substring(1)) < 20){
+			if(Integer.parseInt(cell.substring(1)) < 20){
 				newCell = cell.charAt(0) + "";
 				newCell += Integer.parseInt(cell.substring(1)) + 2;
-				System.out.println("new Cell value" + newCell);
-			}else{
+				System.out.println("new Cell " + newCell);
+			}else if (Integer.parseInt(cell.substring(1)) == 20 && cell.charAt(0) != end.charAt(0)){
 				//System.out.println("new Cell value" + newCell);
-				newCell = cell.charAt('0') + 1 + "";
+				newCell = cell.charAt(0) + 1 + "";
 				newCell += 1;
 				System.out.println("new Cell value" + newCell);
 			}
 				
-			System.out.println(sum + sum(newCell, end));
+			
+
 			return (sum + sum(newCell, end));
 			
 		}

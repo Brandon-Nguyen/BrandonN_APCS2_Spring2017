@@ -66,12 +66,19 @@ public class FormulaCell extends RealCell{
 			for(int i = 1; i < formula.length - 2; i += 2 ){
 				double num = 0.0;
 				double secondNum = 0.0;
+				//SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
+			//	SpreadsheetLocation cell2 = new SpreadsheetLocation(formula[i + 2]);
 				if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <='L'){
 						formula[i] = formula[i].toUpperCase();
 						//System.out.println(formula[i]);
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
+						if(grid[cell.getRow()][cell.getCol()] instanceof RealCell){
+							formula[i] = Double.toString(((RealCell)grid[cell.getRow()][cell.getCol()]).getDoubleValue());
+						}else{
+							formula[i] = "0.0";
+						}
 						//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
-						formula[i] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
+						
 
 				}
 				
@@ -79,7 +86,11 @@ public class FormulaCell extends RealCell{
 						formula[i+2] = formula[i+2].toUpperCase();
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i + 2]);
 						//System.out.println(formula[i + 2]);
-						formula[i + 2] = grid[cell.getRow()][cell.getCol()].abbreviatedCellText();
+						if(grid[cell.getRow()][cell.getCol()] instanceof RealCell){
+							formula[i+2] = Double.toString(((RealCell)grid[cell.getRow()][cell.getCol()]).getDoubleValue());
+						}else{
+							formula[i+2] = "0.0";
+						}
 						//System.out.println(secondNum);
 				}
 				
@@ -90,7 +101,6 @@ public class FormulaCell extends RealCell{
 				
 				if(formula[i + 1].equals("*")){
 					storeVal = num * secondNum;
-					
 				}else if(formula[i + 1].equals("/")){
 					storeVal = num / secondNum;
 				}else if(formula[i + 1].equals("+")){
@@ -108,29 +118,23 @@ public class FormulaCell extends RealCell{
 		//return 0.0;
 	}
 	
-	public double sum(String cell, String end){
-		if(cell.equals(end)){
-			SpreadsheetLocation something = new SpreadsheetLocation(cell);
-			System.out.println(Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText()));
-			return Double.parseDouble(grid[something.getRow()][something.getCol()].abbreviatedCellText());
-		}
+	public double sum(String cell, String end){	
 		if(cell.charAt(0) == end.charAt(0) && Integer.parseInt(cell.substring(1)) > Integer.parseInt(end.substring(1))){
 			cell = cell.substring(0, 1) + "" + (Integer.parseInt(cell.substring(1))- 1);
 			System.out.println(cell);
 		}
-
 		SpreadsheetLocation loc = new SpreadsheetLocation(cell);
-		if(cell.charAt(0) == end.charAt(0) 
-				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
+		//make test for realcell and stuff
+		if()
+		if(cell.equals(end)){
 			System.out.println("ended");
-			return 0.0;
+			return ((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
 		}else{
-
 			double first = 
-					Double.parseDouble(grid[loc.getRow()][loc.getCol()].abbreviatedCellText());
+					((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
 			System.out.println(" part of recursion" + first);
 			double second = 
-					Double.parseDouble(grid[loc.getRow() + 1][loc.getCol()].abbreviatedCellText());
+					((RealCell)grid[loc.getRow() + 1][loc.getCol() + 1]).getDoubleValue();
 			System.out.println(second);
 			double sum = first + second;
 			System.out.println("sum of 1 and 2 " + sum);
@@ -144,13 +148,10 @@ public class FormulaCell extends RealCell{
 				System.out.println("new Cell " + newCell);
 			}else if (Integer.parseInt(cell.substring(1)) == 20 && cell.charAt(0) != end.charAt(0)){
 				//System.out.println("new Cell value" + newCell);
-				newCell = cell.charAt(0) + 1 + "";
-				newCell += 1;
+				newCell = ((char)cell.charAt(0)) + 1 + "1";
 				System.out.println("new Cell value" + newCell);
 			}
-				
-			
-
+			System.out.println("exit");
 			return (sum + sum(newCell, end));
 			
 		}

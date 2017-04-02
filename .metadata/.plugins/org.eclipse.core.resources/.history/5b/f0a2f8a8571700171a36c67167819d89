@@ -1,0 +1,185 @@
+//Brandon Nguyen, 2nd Period
+package textExcel;
+
+import java.util.Arrays;
+
+public class FormulaCell extends RealCell{
+	
+	private String formula;
+	private Cell[][] grid;
+
+	public FormulaCell(String formula, Cell[][] spreadsheet) {
+		// TODO Auto-generated constructor stub
+		this.formula = formula;
+		this.grid = spreadsheet;
+		setRealCell(formula);
+	}
+
+	public double getDoubleValue(){
+		String input = getRealCell().substring(2, getRealCell().length() - 2);
+		input = input.trim();
+		System.out.println(input);
+		String[] formula = input.split(" ");
+		System.out.println(Arrays.toString(formula));
+		if(formula.length == 1){
+			System.out.println(formula[0]);
+			return Double.parseDouble(formula[0]);
+		}
+		if((formula[0].toUpperCase().equals("AVG")) || (formula[0].toUpperCase().equals("SUM"))){
+			
+			String cell = formula[1].toUpperCase().substring(0, formula[1].indexOf('-'));
+			String newCell = formula[1].toUpperCase().substring(0, formula[1].indexOf('-'));
+			String ending = formula[1].toUpperCase().substring(formula[1].indexOf('-') + 1);
+
+			if(formula[0].toUpperCase().equals("AVG")){
+				double count = 0.0;
+
+				int startRow = Integer.parseInt(cell.toUpperCase().substring(1));
+				char startCol = (char)(cell.charAt(0));
+				int endRow = Integer.parseInt(ending.toUpperCase().substring(1));
+				char endCol = (char) (ending.charAt(0));
+				
+				for(char i = startCol; i <= endCol; i++ ){
+					
+					if(startCol != endCol){
+						for(int j = startRow; j <= 20; j++){
+							SpreadsheetLocation loc = new SpreadsheetLocation(i + "" + j);
+							//System.out.println((int)i - 'A' + "" + j);
+							if(grid[loc.getRow()][loc.getCol()] instanceof RealCell){
+								count++;
+							}
+							//System.out.println("count" + count);
+						}
+						startRow = 1;
+					}else{
+						for(int j = startRow; j <= endRow; j++){
+							SpreadsheetLocation loc = new SpreadsheetLocation(i + "" + j);
+							if(grid[loc.getRow()][loc.getCol()] instanceof RealCell){
+								count++;
+							}
+							//System.out.println("count" + count);
+						}
+					}
+				}
+
+				return (sum(cell, newCell, ending)) / count;
+			}else{
+
+				return (sum (cell, newCell, ending));
+			}
+		}else{
+			double storeVal = 0.0;
+			for(int i = 0; i < formula.length - 2; i += 2 ){
+				double num = 0.0;
+				double secondNum = 0.0;
+				//SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
+			//	SpreadsheetLocation cell2 = new SpreadsheetLocation(formula[i + 2]);
+				if(formula[i].toUpperCase().charAt(0) >= 'A' && formula[i].toUpperCase().charAt(0) <='L'){
+						formula[i] = formula[i].toUpperCase();
+						//System.out.println(formula[i]);
+						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i]);
+						if(grid[cell.getRow()][cell.getCol()] instanceof RealCell){
+							formula[i] = Double.toString(((RealCell)grid[cell.getRow()][cell.getCol()]).getDoubleValue());
+						}else{
+							formula[i] = "0.0";
+						}
+						//System.out.println(grid[cell.getRow()][cell.getCol()].abbreviatedCellText());
+						
+
+				}
+				
+				if(formula[i+2].toUpperCase().charAt(0) >= 'A' && formula[i+2].toUpperCase().charAt(0) <= 'L'){
+						formula[i+2] = formula[i+2].toUpperCase();
+						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i + 2]);
+						//System.out.println(formula[i + 2]);
+						if(grid[cell.getRow()][cell.getCol()] instanceof RealCell){
+							formula[i+2] = Double.toString(((RealCell)grid[cell.getRow()][cell.getCol()]).getDoubleValue());
+							System.out.println("Double value at " + cell.getRow() + "" + cell.getCol() + " " + storeVal);
+						}else{
+							formula[i+2] = "0.0";
+						}
+						//System.out.println(secondNum);
+				}
+				
+				num = Double.parseDouble(formula[i]);
+				System.out.println(num);
+				secondNum = Double.parseDouble(formula[i + 2]);
+				System.out.println(secondNum);
+				
+				if(formula[i + 1].equals("*")){
+					storeVal = num * secondNum;
+				}else if(formula[i + 1].equals("/")){
+					storeVal = num / secondNum;
+				}else if(formula[i + 1].equals("+")){
+					storeVal = num + secondNum;
+				}else{
+					storeVal = num - secondNum;
+				}
+				formula[i+2] = Double.toString(storeVal);
+				//System.out.println(" :( " + formula[i+2]);
+				//System.out.println(" ahhh : " +storeVal);
+			}
+
+			return storeVal;
+		}
+	}
+	
+	public double sum(String cell, String newCell, String end){	
+		
+		System.out.println(newCell);
+		
+		SpreadsheetLocation loc = new SpreadsheetLocation(newCell);
+		if(newCell.equals(end)){
+			System.out.println("exit");
+			return ((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
+		}
+		
+
+		if(cell.charAt(0) != end.charAt(0) 
+				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
+			//System.out.println("new Cell value" + newCell);
+			newCell = ((char)(newCell.charAt(0) + 1)) + cell.substring(1);
+			System.out.println("change col " + newCell);
+			
+			
+		}else if(cell.charAt(0) == end.charAt(0) 
+				&& Integer.parseInt(cell.substring(1)) <= Integer.parseInt(end.substring(1))){
+			
+			newCell = Character.toString(cell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
+			System.out.println("change Row " + newCell);
+			
+			
+		}else{
+			if(Integer.parseInt(newCell.substring(1)) < Integer.parseInt(end.substring(1))){
+				
+				newCell = Character.toString(newCell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
+				
+				System.out.println("diff char and int # 1 " + newCell);
+				
+			}else if(Integer.parseInt(newCell.substring(1)) == Integer.parseInt(end.substring(1))){
+				
+				newCell = ((char)(newCell.charAt(0) + 1)) + "" + 1;
+				
+				System.out.println("diff char and int  # 2 " + newCell);
+				
+			}else{
+				
+				newCell = ((char)(newCell.charAt(0) + 1)) + "" + cell.substring(1);
+				
+				System.out.println("diff char and int  # 3 " + newCell);
+				
+			}
+		}
+
+		double first = 0.0;
+		if(grid[loc.getRow()][loc.getCol()] instanceof RealCell ){
+			 first = ((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
+			 System.out.println(cell);
+			System.out.println("part of recursion " + first);
+			return (first + sum(cell, newCell, end));
+		}else{
+			return sum(cell, newCell, end);
+		}
+	}
+
+}

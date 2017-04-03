@@ -15,6 +15,8 @@ public class FormulaCell extends RealCell{
 		setRealCell(formula);
 	}
 
+	
+	//broken here, fix here.....
 	public double getDoubleValue(){
 		String input = getRealCell().substring(2, getRealCell().length() - 2);
 		input = input.trim();
@@ -99,6 +101,7 @@ public class FormulaCell extends RealCell{
 						
 
 				}else{
+					
 					num = Double.parseDouble(formula[i + 1]);
 				}
 				

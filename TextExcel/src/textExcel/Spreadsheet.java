@@ -168,6 +168,8 @@ public class Spreadsheet implements Grid
 			
 			//checks for parenthesis
 		}else if(value.endsWith(")")){
+			
+			//might have to fix here....
 			array[area.getRow()][area.getCol()] = new FormulaCell(value, array);
 			
 			//if there isn't anything then it has to be a value cell
@@ -248,4 +250,8 @@ public class Spreadsheet implements Grid
 		outputFile.close();
 		return getGridText();
 	}
+	
+	// might need to add more methods...
+	
+	
 }

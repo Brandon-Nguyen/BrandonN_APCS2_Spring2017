@@ -59,11 +59,11 @@ public class FormulaCell extends RealCell{
 					}
 				}
 				double save = sum(cell, newCell, ending) / count;
-				System.out.println( "hallo :" + getRealCell() +"exit value avg " + save);
+				System.out.println("exit value avg " + save);
 				return (sum(cell, newCell, ending)) / count;
 			}else{
 				double save = sum(cell, newCell, ending);
-				System.out.println("hallo :" + getRealCell() +"exit value sum " + save);
+				System.out.println("exit value sum " + save);
 				return (sum (cell, newCell, ending));
 			}
 		}else{
@@ -124,7 +124,6 @@ public class FormulaCell extends RealCell{
 	public double sum(String cell, String newCell, String end){	
 		
 		SpreadsheetLocation loc = new SpreadsheetLocation(newCell);
-		
 		if(newCell.equals(end)){
 			if(grid[loc.getRow()][loc.getCol()] instanceof RealCell){
 				return ((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
@@ -133,38 +132,37 @@ public class FormulaCell extends RealCell{
 			}
 		}
 		
-		if(Character.toUpperCase(cell.charAt(0)) != Character.toUpperCase(end.charAt(0)) 
+
+		if(cell.charAt(0) != end.charAt(0) 
 				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
 			newCell = ((char)(newCell.charAt(0) + 1)) + cell.substring(1);
 			
-		}else if( Character.toUpperCase(cell.charAt(0)) == Character.toUpperCase(end.charAt(0))
-				&& Integer.parseInt(cell.substring(1)) <= Integer.parseInt(end.substring(1))){
-			
-			newCell = Character.toString(cell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
-			
-		}else{
-			if(Integer.parseInt(newCell.substring(1)) < Integer.parseInt(end.substring(1))){
-				
-				newCell = Character.toString(newCell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
-
-				
-			}else if(Integer.parseInt(newCell.substring(1)) == Integer.parseInt(end.substring(1))){
-				
-				newCell = ((char)(newCell.charAt(0) + 1)) + "" + 1;
-				
+		}else if(cell.charAt(0) == end.charAt(0)){
+			if(Integer.parseInt(cell.substring(1)) <= Integer.parseInt(end.substring(1))){
+				newCell = Character.toString(cell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
 			}else{
-				newCell = ((char)(newCell.charAt(0) + 1)) + "" + cell.substring(1);
-				
+				if(Integer.parseInt(newCell.substring(1)) < Integer.parseInt(end.substring(1))){
+					
+					newCell = Character.toString(newCell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);
+
+					
+				}else if(Integer.parseInt(newCell.substring(1)) == Integer.parseInt(end.substring(1))){
+					
+					newCell = ((char)(newCell.charAt(0) + 1)) + "" + 1;
+					
+				}else{
+					newCell = ((char)(newCell.charAt(0) + 1)) + "" + cell.substring(1);
+					
+				}
 			}
 		}
 
 		double first;
-		if(grid[loc.getRow()][loc.getCol()] instanceof RealCell){
+		if(grid[loc.getRow()][loc.getCol()] instanceof RealCell ){
 			 first = ((RealCell)grid[loc.getRow()][loc.getCol()]).getDoubleValue();
 			return (first + sum(cell, newCell, end));
 		}else{
 			return sum(cell, newCell, end);
 		}
 	}
-
 }

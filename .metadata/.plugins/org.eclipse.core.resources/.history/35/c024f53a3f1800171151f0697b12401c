@@ -29,7 +29,7 @@ public class FormulaCell extends RealCell{
 			String ending = formula[1].toUpperCase().substring(formula[1].indexOf('-') + 1);
 
 			if(formula[0].toUpperCase().equals("AVG")){
-				double count = 0.0;
+				double count = 1.0;
 
 				int startRow = Integer.parseInt(cell.toUpperCase().substring(1));
 				char startCol = (char)(cell.charAt(0));
@@ -59,11 +59,11 @@ public class FormulaCell extends RealCell{
 					}
 				}
 				double save = sum(cell, newCell, ending) / count;
-				System.out.println( "hallo :" + getRealCell() +"exit value avg " + save);
+				System.out.println("exit value avg " + save);
 				return (sum(cell, newCell, ending)) / count;
 			}else{
 				double save = sum(cell, newCell, ending);
-				System.out.println("hallo :" + getRealCell() +"exit value sum " + save);
+				System.out.println("exit value sum " + save);
 				return (sum (cell, newCell, ending));
 			}
 		}else{
@@ -133,11 +133,11 @@ public class FormulaCell extends RealCell{
 			}
 		}
 		
-		if(Character.toUpperCase(cell.charAt(0)) != Character.toUpperCase(end.charAt(0)) 
+		if(cell.charAt(0) != end.charAt(0) 
 				&& Integer.parseInt(cell.substring(1)) == Integer.parseInt(end.substring(1))){
 			newCell = ((char)(newCell.charAt(0) + 1)) + cell.substring(1);
 			
-		}else if( Character.toUpperCase(cell.charAt(0)) == Character.toUpperCase(end.charAt(0))
+		}else if( cell.charAt(0) == end.charAt(0)
 				&& Integer.parseInt(cell.substring(1)) <= Integer.parseInt(end.substring(1))){
 			
 			newCell = Character.toString(cell.charAt(0)) + (Integer.parseInt(newCell.substring(1)) + 1);

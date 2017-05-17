@@ -1,0 +1,16 @@
+
+public class Images {
+	private String character;
+	private String environment;
+	private ImageIcon person;
+	private JLabel people;
+	
+	public Images(Player character) {
+		this.character = (character.getCharacter());
+		
+		if(this.character == "small"){
+			person = new ImageIcon(getClass().getResource(gordon.jpg)));
+			
+		}
+	}
+}

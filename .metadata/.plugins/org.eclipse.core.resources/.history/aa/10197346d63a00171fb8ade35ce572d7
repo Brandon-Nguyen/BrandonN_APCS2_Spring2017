@@ -1,13 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class Images extends JFrame {
+public class Images {
 	private String character;
 	private ImageIcon person;
 	private JLabel people;
 	
 	public Images(Player character) {
-		setLayout(new FlowLayout());
 		this.character = (character.getCharacter());
 		
 		if(this.character == "small"){
@@ -15,15 +14,7 @@ public class Images extends JFrame {
 			people = new JLabel(person);
 			
 			add(people);
+			
 		}
-	}
-	
-	public static void main(String[] args){
-		Player small = new Player("small");
-		Images woo = new Images(small);
-		woo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		woo.setVisible(true);
-		woo.pack();
-		woo.setTitle("hello there!");
 	}
 }

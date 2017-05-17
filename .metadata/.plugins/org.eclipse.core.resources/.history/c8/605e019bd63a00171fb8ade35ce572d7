@@ -9,7 +9,7 @@ public class Something extends JFrame{
 	private JLabel label2;
 	
 	public Something(){
-		setLayout(new FlowLayout());
+		
 		
 		image1 = new ImageIcon(getClass().getResource("download.jpg"));
 		label1 = new JLabel(image1);

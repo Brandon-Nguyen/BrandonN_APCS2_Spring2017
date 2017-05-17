@@ -15,15 +15,7 @@ public class Images extends JFrame {
 			people = new JLabel(person);
 			
 			add(people);
+			
 		}
-	}
-	
-	public static void main(String[] args){
-		Player small = new Player("small");
-		Images woo = new Images(small);
-		woo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		woo.setVisible(true);
-		woo.pack();
-		woo.setTitle("hello there!");
 	}
 }

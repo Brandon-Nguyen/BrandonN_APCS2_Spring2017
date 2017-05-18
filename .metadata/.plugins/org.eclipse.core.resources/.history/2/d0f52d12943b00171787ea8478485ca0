@@ -1,0 +1,12 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class Something extends JPanel{
+	
+	public Something(){
+		setBackground(Color.BLUE;
+	}
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+	}
+}

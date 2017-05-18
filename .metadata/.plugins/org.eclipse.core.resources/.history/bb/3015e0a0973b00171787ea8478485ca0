@@ -1,0 +1,17 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class Something extends JPanel{
+	private Image gordon = new Image(getImage(getCodeBase(), "gordon.jpg"));
+	
+	public Something(){
+		setBackground(Color.YELLOW);
+	}
+	public void paint(Graphics g){
+		super.paint(g);
+		
+		g.setColor(Color.black);
+		g.drawLine(0, 0, 100, 100);
+		g.drawImage(getClass().getResource("gordon.jpg"), 0,0, 638, 413, this);
+	}
+}

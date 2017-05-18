@@ -1,0 +1,19 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class Something extends JFrame{
+	Image image;
+	public Something(){
+		this.setTitle("Remember g for Graphics");
+		this.setSize(500,500);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+	public void paint(Graphics g){
+
+		g.setColor(Color.black);
+		ImageIcon i = new ImageIcon("gordon.jpg");
+		image = i.getImage();
+		g.drawImage(image, 0, 0, 200, 200, null);
+	}
+}

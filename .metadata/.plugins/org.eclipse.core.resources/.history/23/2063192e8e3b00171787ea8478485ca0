@@ -1,0 +1,29 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class Images extends JFrame {
+	private String character;
+	private ImageIcon person;
+	private JLabel people;
+	
+	public Images(Player character) {
+		setLayout(new FlowLayout());
+		this.character = (character.getCharacter());
+		
+		if(this.character == "small"){
+			person = new ImageIcon(getClass().getResource("gordon.jpg"));
+			people = new JLabel(person);
+			people.setBounds(100,100,638, 413);
+			add(people);
+		}
+	}
+	
+	public static void main(String[] args){
+		Player small = new Player("small");
+		Images woo = new Images(small);
+		woo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		woo.setVisible(true);
+		woo.setSize(1000,1000;
+		woo.setTitle("hello there!");
+	}
+}

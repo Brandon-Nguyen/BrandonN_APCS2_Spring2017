@@ -1,30 +1,30 @@
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
-public class Something extends JFrame{
-	private ImageIcon image1;
-	private JLabel label1;
-	private ImageIcon image2;
-	private JLabel label2;
+public class Something extends JPanel{
+	private BufferedImage image;
+	private BufferedImage image2;
 	
 	public Something(){
-		setLayout(new FlowLayout());
+		try{
+			image = ImageIO.read(getClass().getResource("/gordon.jpg"));
+			image2 = ImageIO.read(getClass().getResource("/tug.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		
-		image1 = new ImageIcon(getClass().getResource("download.jpg"));
-		label1 = new JLabel(image1);
-		add(label1);
+		repaint();
 		
-		image2 = new ImageIcon(getClass().getResource("gordon.jpg"));
-		label2 = new JLabel(image2);
-		add(label2);
+		
 	}
-	public static void main(String[] args) {
-		Something gui = new Something();
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gui.setVisible(true);
-		gui.pack();
-		gui.setTitle("hello there!");
-	}
+	
+	public void paint(Graphics g){
+		g.drawImage(image, 0, 0, null);
+		g.drawImage(image2, 0, 0, null);
 
+	}
 }

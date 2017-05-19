@@ -1,0 +1,33 @@
+
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class TestSwing3 extends JFrame {
+    
+    public static void main(String[] args) {    
+        new TestSwing3().start();
+    }
+    
+    public void start(){
+        setTitle("Tap of War");
+    	ImageImplement panel = new ImageImplement(new ImageIcon("src/bigseashore.png").getImage());
+    	add(panel);
+    	JLabel label = new JLabel("I'm on fire");
+        label.setFont(label.getFont().deriveFont(Font.BOLD, 48));
+        label.setForeground(Color.WHITE);
+        label.setHorizontalAlignment(JLabel.CENTER);
+        add(label);
+    	
+    	
+    	
+    	
+    	setVisible(true);
+    	setSize(1000,550);
+    	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+}

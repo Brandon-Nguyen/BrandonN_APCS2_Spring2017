@@ -1,0 +1,47 @@
+
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class YAY extends JFrame {
+    
+    public static void main(String[] args) {    
+        new YAY().start();
+    }
+    
+    public void start(){
+    	//set tab title and exit button
+    	setTitle("Tap of War Game");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        //set background
+        JLabel background = new JLabel(new ImageIcon("/flowers.gif"));
+        background.setLayout(new BorderLayout());
+        add(background);
+
+        //set game title and align
+        JLabel label = new JLabel("TAP OF WAR");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setVerticalAlignment(JLabel.TOP);
+        
+        //start button
+        JButton button = new JButton("START");
+        button.setSize(100, 30);
+        button.setLocation(600, 400);
+        background.add(button);
+        
+        //set game title font
+        label.setFont(label.getFont().deriveFont(Font.BOLD, 48));
+        label.setForeground(Color.GRAY);
+        background.add(label);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+}

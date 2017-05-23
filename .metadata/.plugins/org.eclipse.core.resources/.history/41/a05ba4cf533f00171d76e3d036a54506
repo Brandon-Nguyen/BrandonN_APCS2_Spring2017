@@ -1,0 +1,23 @@
+
+public class Character {
+	private String character;
+	
+	public Character(String character){
+		this.character = character;
+	}
+	
+	public String getCharacter(){
+		return character;
+	}
+	
+	public int getStamina(){
+		return 0;
+	}
+	
+	public int getPullStrength(){
+		if(character.equals("SMALL MAN")){
+			
+		}
+		return 0;
+	}
+}

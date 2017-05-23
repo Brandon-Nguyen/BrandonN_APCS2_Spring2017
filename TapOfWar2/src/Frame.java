@@ -36,8 +36,8 @@ public class Frame extends JFrame {
         label.setBounds(810,0,500,100);
         add(label);
         
-        JLabel label2 = new JLabel(new ImageIcon(getClass().getResource("/tug.png")));
-        label2.setBounds(720,675,480,305);
+        JLabel label2 = new JLabel(new ImageIcon(getClass().getResource("/tugging.png")));
+        label2.setBounds(720,675,547,232);
         add(label2);
         
         JLabel background = new JLabel(new ImageIcon(getClass().getResource("/flowers.gif")));
